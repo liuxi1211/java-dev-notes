@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>佛山→云南 13天自驾执行手册</title>
+<style>
+:root{
+  --paper:#F6F1E6; --paper2:#EEE7D7; --card:#FFFDF7; --line:#DCD3BE; --line2:#CBBFA4;
+  --ink:#2B2921; --ink2:#6E695B; --ink3:#7A7462;
+  --pine:#2E5C4D; --pine-deep:#1E4237; --pine-soft:#E3EAE2;
+  --terra:#C05B28; --terra-soft:#F6E3D4;
+  --gold:#B98F1F; --sky:#3F7189; --sky-soft:#E2EBEF;
+  --danger:#A63A2B;
+  --serif:"Noto Serif SC","Source Han Serif SC","Songti SC","STSong",SimSun,serif;
+  --sans:system-ui,-apple-system,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
+  --mono:ui-monospace,"SF Mono","Cascadia Mono",Consolas,"Courier New",monospace;
+  --r:16px; --r2:10px;
+  --shadow:0 1px 2px rgba(43,41,33,.05),0 10px 30px -18px rgba(43,41,33,.35);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.75;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background:radial-gradient(1200px 500px at 85% -5%,rgba(192,91,40,.06),transparent 60%),
+             radial-gradient(900px 420px at -10% 20%,rgba(46,92,77,.06),transparent 60%)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
+::selection{background:var(--pine);color:#fff}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;padding:64px 0 34px;overflow:hidden}
+.hero .ridge{position:absolute;left:0;right:0;bottom:-4px;width:100%;height:230px;pointer-events:none}
+.hero-kicker{font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--terra);text-transform:uppercase;margin-bottom:14px}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(30px,5.4vw,52px);line-height:1.18;letter-spacing:.02em}
+h1 .thin{display:block;font-size:.46em;font-weight:600;color:var(--ink2);letter-spacing:.3em;margin-top:10px}
+h1 .arrow{color:var(--terra)}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.mchip{font-family:var(--mono);font-size:12px;color:var(--ink2);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px 12px}
+.mchip b{color:var(--pine);font-weight:700}
+.progress-wrap{margin-top:20px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;box-shadow:var(--shadow)}
+.hero-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{font-family:var(--sans);font-size:13px;padding:7px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;transition:.2s}
+.btn:hover{border-color:var(--pine);color:var(--pine)}
+.btn.danger:hover{border-color:var(--danger);color:var(--danger)}
+
+/* ---------- Section titles ---------- */
+section{margin-top:52px;scroll-margin-top:64px}
+.sec-title{display:flex;align-items:baseline;gap:12px;font-family:var(--serif);font-size:24px;font-weight:900;letter-spacing:.04em}
+.sec-title .no{font-family:var(--mono);font-size:13px;color:var(--terra);letter-spacing:.1em}
+.sec-title::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent);transform:translateY(-6px)}
+.sec-desc{color:var(--ink2);font-size:13.5px;margin-top:6px}
+
+/* ---------- Day nav ---------- */
+.days-nav{position:sticky;top:0;z-index:50;margin-top:30px;padding:7px 12px;
+  background:rgba(246,241,230,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.days-nav-in{max-width:1040px;margin:0 auto;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 18px,#000 calc(100% - 18px),transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0,#000 18px,#000 calc(100% - 18px),transparent 100%)}
+.days-nav-in::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;font-size:12.5px;font-family:var(--mono);color:var(--ink2);background:var(--card);border:1px solid var(--line);
+  border-radius:999px;padding:4px 11px;cursor:pointer;white-space:nowrap;transition:.2s;text-decoration:none}
+.chip:hover{color:var(--pine);border-color:var(--pine)}
+.chip.active{background:var(--pine);border-color:var(--pine);color:#fff}
+.chip.today{border-color:var(--terra);color:var(--terra);font-weight:700}
+.chip.today.active{background:var(--terra);border-color:var(--terra);color:#fff}
+/* round single-char tabs (总/预/参) */
+.chip.tab{width:28px;height:28px;min-width:28px;padding:0;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:600}
+/* segmented progress bar for D1–D13 */
+.seg-group{display:flex;align-items:center;margin-left:4px}
+.seg-group .chip.dchip{flex:0 0 auto;min-width:30px;padding:4px 7px;text-align:center;border-radius:0;
+  border-left:none;background:var(--card);position:relative}
+.seg-group .chip.dchip:first-child{border-radius:999px 0 0 999px;border-left:1px solid var(--line)}
+.seg-group .chip.dchip:last-child{border-radius:0 999px 999px 0}
+.seg-group .chip.dchip:hover{color:var(--pine)}
+.seg-group .chip.dchip.active{background:var(--pine);border-color:var(--pine);color:#fff}
+.seg-group .chip.dchip.completed{background:var(--pine);border-color:var(--pine);color:#fff}
+.seg-group .chip.dchip.completed.active{background:var(--pine-deep)}
+.seg-group .chip.dchip.today{box-shadow:0 0 0 2px var(--terra),0 0 0 4px rgba(192,91,40,.2);z-index:2}
+.seg-group .chip.dchip.today.completed{background:var(--terra);border-color:var(--terra)}
+.seg-group .chip.dchip.today.active{background:var(--terra);border-color:var(--terra);color:#fff}
+
+/* ---------- Cards / generic ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.note{border-left:3px solid var(--pine);background:var(--pine-soft);border-radius:0 var(--r2) var(--r2) 0;padding:10px 14px;font-size:13.5px;color:var(--pine-deep);margin:10px 0}
+.note.warn{border-color:var(--terra);background:var(--terra-soft);color:#7A3B17}
+.note strong{font-weight:700}
+.pill{display:inline-block;font-size:11px;font-weight:700;font-style:normal;border-radius:999px;padding:1px 9px;vertical-align:2px;margin-left:8px;letter-spacing:.05em}
+.pill.rec{background:var(--terra);color:#fff}
+.pill.pb{background:var(--sky);color:#fff}
+.pill.warnp{background:#fff;border:1px solid var(--danger);color:var(--danger)}
+.pill.tag{background:var(--paper2);color:var(--ink2);border:1px solid var(--line)}
+
+/* ---------- Route map ---------- */
+.route-map{margin-top:16px;padding:14px 16px 10px}
+.route-map svg{display:block;width:100%;height:auto}
+.rm-path{fill:none;stroke:var(--line2);stroke-width:3;stroke-linecap:round}
+.rm-path.branch{stroke-dasharray:3 6;stroke-width:2.5}
+.rm-city{font-family:var(--sans);font-size:12.5px;font-weight:700;fill:var(--ink2)}
+.rm-km{font-family:var(--mono);font-size:8.5px;fill:var(--ink3)}
+.rm-town{font-family:var(--sans);font-size:9.5px;fill:var(--ink3)}
+.rm-tick{fill:var(--ink3)}
+.rm-station{fill:var(--pine)}
+.rm-station.branch-st{fill:var(--card);stroke:var(--line2);stroke-width:1.5}
+.map-node{cursor:pointer}
+.map-node circle.dot{fill:var(--card);stroke:var(--line2);stroke-width:2;transition:.25s}
+.map-node text{pointer-events:none;transition:.25s}
+.map-node text.num{font-family:var(--mono);font-size:13px;font-weight:700;fill:var(--ink2);text-anchor:middle;dominant-baseline:central}
+.map-node text.lb{font-family:var(--sans);font-size:10.5px;font-weight:700;fill:var(--ink2)}
+.map-node text.dt{font-family:var(--mono);font-size:9.5px;fill:var(--ink3)}
+.map-node:hover circle.dot{stroke:var(--pine)}
+.map-node.done circle.dot{fill:#16A34A;stroke:#16A34A}
+.map-node.done text.num{fill:#fff}
+.rm-legend{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--ink2);margin-top:6px;padding:0 4px}
+.rm-legend .dotk{display:inline-block;width:10px;height:10px;border-radius:999px;margin-right:5px;vertical-align:-1px}
+.rm-legend .k-done{background:#16A34A}
+.rm-legend .k-fut{background:transparent;border:2px solid var(--line2);box-sizing:border-box}
+.rm-legend .tip{margin-left:auto;color:var(--ink3)}
+
+/* ---------- Overview table ---------- */
+.table-scroll{overflow-x:auto;border-radius:var(--r);
+  -webkit-mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 24px),transparent 100%);
+  mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 24px),transparent 100%)}
+table.ov{width:100%;border-collapse:collapse;font-size:13.5px;min-width:640px}
+table.ov th{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;color:var(--ink3);text-align:left;padding:12px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+table.ov td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+table.ov tr:hover td{background:rgba(46,92,77,.045)}
+table.ov .djump{font-family:var(--mono);color:var(--pine);font-weight:700;cursor:pointer;white-space:nowrap}
+table.ov .km{font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+table.ov .muted{color:var(--ink3)}
+
+/* ---------- Prep grid ---------- */
+.prep-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:18px}
+.prep-card{padding:18px 18px 14px}
+.prep-card h4{font-family:var(--serif);font-size:16px;color:var(--pine-deep);display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.prep-card h4 .ico{width:22px;height:22px;flex:0 0 auto}
+
+/* ---------- Tasks ---------- */
+.tasks{margin-top:8px}
+.task{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-radius:var(--r2);cursor:pointer;transition:background .2s,opacity .2s;position:relative}
+.task:hover{background:rgba(46,92,77,.05)}
+.task input{position:absolute;opacity:0;width:0;height:0}
+.task .box{flex:0 0 auto;width:19px;height:19px;margin-top:3px;border:1.6px solid var(--ink3);border-radius:6px;background:#fff;display:grid;place-items:center;transition:.18s}
+.task .box svg{width:11px;height:11px;stroke:#fff;stroke-width:3;fill:none;opacity:0;transform:scale(.4);transition:.18s}
+.task input:checked ~ .box{background:var(--pine);border-color:var(--pine)}
+.task input:checked ~ .box svg{opacity:1;transform:scale(1)}
+.task input:focus-visible ~ .box{outline:2px solid var(--terra);outline-offset:2px}
+.task .txt{flex:1;font-size:14px;transition:.2s}
+.task .txt small{display:block;color:var(--ink2);font-size:12.5px;line-height:1.6}
+.task input:checked ~ .txt{color:var(--ink3);text-decoration:line-through;text-decoration-color:rgba(192,91,40,.5)}
+.task.done{background:rgba(46,92,77,.035)}
+.task.locked{opacity:.45;pointer-events:none;background:rgba(120,115,100,.06);border-left:3px solid var(--ink3)}
+.task.dec{background:linear-gradient(90deg,var(--terra-soft),transparent 70%);border:1px dashed rgba(192,91,40,.4);border-radius:var(--r2)}
+.task.dec .box{border-color:var(--terra)}
+.task.dec input:checked ~ .box{background:var(--terra);border-color:var(--terra)}
+.task.dec input:checked ~ .txt{color:var(--terra);text-decoration:none;font-weight:700}
+.ghint{font-family:var(--mono);font-size:11.5px;color:var(--ink3);margin:2px 0 4px 12px;letter-spacing:.05em}
+.sub{list-style:none;margin:4px 0 0 29px;border-left:2px solid var(--line);padding-left:12px}
+.sub li{font-size:12.5px;color:var(--ink2);padding:2px 0}
+.sub b{color:var(--ink);font-weight:600}
+
+/* ---------- Day cards ---------- */
+.day{margin-top:16px;scroll-margin-top:64px}
+.day-head{width:100%;display:flex;align-items:center;gap:14px;padding:16px 18px;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--r);cursor:pointer;box-shadow:var(--shadow);text-align:left;transition:.2s;font-family:var(--sans)}
+.day.open .day-head{border-radius:var(--r) var(--r) 0 0;border-color:var(--pine)}
+.day-head:hover{border-color:var(--pine)}
+.d-badge{flex:0 0 auto;width:46px;height:46px;border-radius:12px;background:var(--pine);color:#fff;display:grid;place-items:center;
+  font-family:var(--mono);font-weight:700;font-size:15px;letter-spacing:.02em}
+.day.milestone .d-badge{background:var(--terra)}
+.day.today .d-badge{outline:3px solid rgba(192,91,40,.35);outline-offset:2px}
+.d-main{flex:1;min-width:0}
+.d-title{font-family:var(--serif);font-size:17px;font-weight:900;letter-spacing:.02em;display:block}
+.d-sub{font-size:12px;color:var(--ink2);display:block;margin-top:2px}
+.d-anchor{display:block;font-size:12px;color:var(--terra);font-weight:700;margin-top:3px;letter-spacing:.01em}
+.day.today .d-anchor{color:var(--pine)}
+.d-chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.chip-mini{font-family:var(--mono);font-size:11px;color:var(--ink2);border:1px solid var(--line);border-radius:999px;padding:2px 9px;white-space:nowrap}
+.d-prog{flex:0 0 74px;height:6px;background:var(--paper2);border-radius:999px;overflow:hidden}
+.d-prog i{display:block;height:100%;width:0;background:var(--pine);transition:width .4s}
+.d-arrow{flex:0 0 auto;width:18px;height:18px;stroke:var(--ink3);stroke-width:2;fill:none;transition:transform .3s}
+.day.open .d-arrow{transform:rotate(180deg);stroke:var(--pine)}
+.day-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s ease;overflow:hidden}
+.day.open .day-body{grid-template-rows:1fr}
+.day-body-in{min-height:0;overflow:hidden;border:1px solid var(--line);border-top:none;border-radius:0 0 var(--r) var(--r);background:var(--card);padding:16px 18px 18px;transition:padding .4s ease}
+.day:not(.open) .day-body-in{padding-top:0;padding-bottom:0;border-bottom-width:0}
+.day-body-in h5{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--ink3);margin:16px 0 4px;font-weight:600}
+.day-body-in h5:first-child{margin-top:0}
+.route{font-family:var(--mono);font-size:12.5px;color:var(--pine-deep);background:var(--paper2);border-radius:var(--r2);padding:7px 12px;margin:6px 0 2px}
+.stay{font-size:13px;color:var(--ink2);padding:6px 0 0}
+.stay b{color:var(--ink)}
+.day.branch-lock .day-head{border-style:dashed;border-color:var(--terra)}
+.branch-tag{display:inline-block;font-size:10.5px;color:var(--terra);border:1px solid var(--terra);border-radius:999px;padding:1px 8px;margin-left:8px;vertical-align:2px}
+/* shangri-la branch swap: main/branch two variants */
+.v-branch{display:none}
+body.sh-on .v-main{display:none}
+body.sh-on .v-branch{display:block}
+body.sh-on .d-chips.v-branch{display:flex}
+
+/* ---------- Banner ---------- */
+.banner{display:flex;gap:10px;align-items:flex-start;background:#FBEFE0;border:1px solid var(--terra);border-radius:var(--r2);
+  padding:12px 16px;margin-top:16px;font-size:13.5px;color:#7A3B17}
+.banner[hidden]{display:none}
+
+/* ---------- Reference blocks ---------- */
+.ref-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:18px}
+.ref-card{padding:18px}
+.ref-card h4{font-family:var(--serif);font-size:16px;color:var(--pine-deep);margin-bottom:8px}
+.ref-card table,.ref-card ul{width:100%;border-collapse:collapse;font-size:13px}
+.ref-card td{padding:7px 4px;border-bottom:1px dashed var(--line);vertical-align:top}
+.ref-card td:first-child{color:var(--ink2);white-space:nowrap;padding-right:12px}
+.ref-card td:last-child{color:var(--ink)}
+.ref-card ul{list-style:none}
+.ref-card li{padding:5px 0;border-bottom:1px dashed var(--line);font-size:13px;color:var(--ink)}
+.ref-card li:last-child{border-bottom:none}
+.kbd{font-family:var(--mono);font-size:12px;background:var(--paper2);border-radius:4px;padding:1px 6px;white-space:nowrap}
+.big{font-family:var(--mono);font-weight:700;color:var(--terra)}
+
+/* ---------- Footer / fab ---------- */
+footer{margin:60px 0 90px;text-align:center;color:var(--ink3);font-size:12px;line-height:2}
+footer .mono{font-family:var(--mono)}
+.fab{position:fixed;right:18px;bottom:18px;z-index:60;width:42px;height:42px;border-radius:50%;background:var(--pine);color:#fff;border:none;
+  cursor:pointer;box-shadow:0 8px 24px -8px rgba(30,66,55,.6);display:grid;place-items:center;opacity:0;pointer-events:none;transition:.3s}
+.fab.show{opacity:1;pointer-events:auto}
+
+@media (max-width:640px){
+  .hero{padding:44px 0 26px}
+  .hero .ridge{height:150px}
+  .d-prog{display:none}
+  .day-head{padding:13px 14px;gap:10px}
+  .d-badge{width:40px;height:40px;font-size:13px}
+  .d-chips{flex-basis:100%;justify-content:flex-start;order:5;padding-left:50px;margin-top:2px}
+  .day-head{flex-wrap:wrap}
+  .day-body-in{padding:14px}
+  .wrap{padding:0 14px}
+  .task .txt{font-size:13.5px}
+}
+@media print{.days-nav,.fab,.hero-actions{display:none}.day-body{grid-template-rows:1fr!important}
+  .day-body-in{padding:16px 18px 18px!important;border-bottom-width:1px!important}}
+
+/* ---------- Dark mode ---------- */
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#1A1814; --paper2:#26231C; --card:#201E18; --line:#3A352A; --line2:#4A4438;
+    --ink:#E8E2D4; --ink2:#B0A996; --ink3:#8A8370;
+    --pine:#6FAE8C; --pine-deep:#A8D5BB; --pine-soft:#243328;
+    --terra:#E08A4E; --terra-soft:#3A2818;
+    --gold:#D4B05A; --sky:#6FA3B8; --sky-soft:#1E2E33;
+    --danger:#D97060;
+  }
+  body{background:var(--paper);color:var(--ink)}
+  body::before{opacity:.3}
+  ::selection{background:var(--pine);color:#1A1814}
+  .card,.prep-card,.ref-card,.progress-wrap{background:var(--card);border-color:var(--line)}
+  .note{background:var(--pine-soft);color:var(--pine-deep)}
+  .note.warn{background:var(--terra-soft);color:#E8B98A}
+  .days-nav{background:rgba(26,24,20,.9)}
+  .chip,.chip-mini,.mchip{background:var(--card);border-color:var(--line);color:var(--ink2)}
+  .chip:hover{color:var(--pine);border-color:var(--pine)}
+  .pill.tag{background:var(--paper2);color:var(--ink2);border-color:var(--line)}
+  .task:hover,.task.done{background:rgba(111,174,140,.07)}
+  .task.locked{background:rgba(138,131,112,.08);border-color:var(--ink3)}
+  .day-head{background:var(--card);border-color:var(--line)}
+  .day.open .day-head{border-color:var(--pine)}
+  .day.branch-lock .day-head{border-color:var(--terra)}
+  .day-body-in{background:var(--card);border-color:var(--line)}
+  .route{background:var(--paper2);color:var(--pine-deep)}
+  .banner{background:#3A2818;border-color:var(--terra);color:#E8B98A}
+  .day-note{background:var(--paper2);border-color:var(--line);color:var(--ink)}
+  table.ov th{color:var(--ink3);border-bottom-color:var(--ink)}
+  table.ov td{border-bottom-color:var(--line)}
+  table.ov tr:hover td{background:rgba(111,174,140,.07)}
+  .kbd{background:var(--paper2)}
+  .d-prog{background:var(--paper2)}
+}
+</style>
+<style>
+#days .day-body-in h5{position:relative;padding-left:21px;line-height:19px}
+.h5ic{position:absolute;left:0;top:50%;width:13px;height:13px;color:var(--terra);transform:translateY(calc(-50% - 0.5px));z-index:1}
+.h5ic svg{width:100%;height:100%;display:block}
+.day-note{width:100%;min-height:76px;margin-top:6px;background:var(--paper2);border:1px solid var(--line);border-radius:var(--r2);padding:10px 12px;font-family:var(--sans);font-size:13.5px;line-height:1.7;color:var(--ink);resize:vertical}
+.day-note:focus{outline:2px solid var(--pine);border-color:var(--pine)}
+</style></head>
+<body>
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <svg class="ridge" viewBox="0 0 1440 230" preserveAspectRatio="none" aria-hidden="true">
+    <circle cx="1150" cy="52" r="34" fill="#C05B28" opacity=".85"/>
+    <path d="M0,150 L120,105 L230,150 L340,88 L470,152 L580,110 L700,158 L830,95 L960,150 L1090,105 L1220,155 L1330,118 L1440,150 L1440,230 L0,230 Z" fill="#2E5C4D" opacity=".16"/>
+    <path d="M0,185 L150,140 L290,182 L430,120 L570,180 L720,132 L870,185 L1020,128 L1170,182 L1310,145 L1440,180 L1440,230 L0,230 Z" fill="#2E5C4D" opacity=".38"/>
+    <path d="M0,215 L180,178 L340,210 L520,165 L700,212 L880,172 L1060,213 L1240,180 L1440,208 L1440,230 L0,230 Z" fill="#1E4237"/>
+  </svg>
+  <div class="wrap">
+    <div class="hero-kicker">2026.09.25 — 10.07 · 中秋 × 国庆 · 自驾执行手册</div>
+    <h1>佛山<span class="arrow">→</span>云南<span class="thin">昆 明 · 大 理 · 丽 江 · 玉 龙 雪 山</span></h1>
+    <div class="hero-meta">
+      <span class="mchip">总里程 <b>≈3950 km</b></span>
+      <span class="mchip"><b>2 人</b>出行 · 单人驾驶</span>
+      <span class="mchip">雪山索道 <b>4506 m</b></span>
+      <span class="mchip">返程 <b>10/6</b> 到家</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="hero-actions">
+        <button class="btn" id="expandAll">展开</button>
+        <button class="btn" id="collapseAll">收起</button>
+        <button class="btn danger" id="resetAll">重置</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ STICKY NAV ============ -->
+<nav class="days-nav" id="daysNav">
+  <div class="days-nav-in">
+    <a class="chip tab" data-target="overview" title="总览">总</a>
+    <a class="chip tab" data-target="prep" title="行前准备">预</a>
+    <span class="seg-group">
+    <a class="chip dchip" data-day="1" title="D1">D1</a><a class="chip dchip" data-day="2" title="D2">D2</a><a class="chip dchip" data-day="3" title="D3">D3</a><a class="chip dchip" data-day="4" title="D4">D4</a><a class="chip dchip" data-day="5" title="D5">D5</a><a class="chip dchip" data-day="6" title="D6">D6</a><a class="chip dchip" data-day="7" title="D7">D7</a><a class="chip dchip" data-day="8" title="D8">D8</a><a class="chip dchip" data-day="9" title="D9">D9</a><a class="chip dchip" data-day="10" title="D10">D10</a><a class="chip dchip" data-day="11" title="D11">D11</a><a class="chip dchip" data-day="12" title="D12">D12</a><a class="chip dchip" data-day="13" title="D13">D13</a>
+    </span>
+    <a class="chip tab" data-target="ref" title="参考速查">参</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <div class="banner" id="shangriLaBanner" hidden>⚠️ <span><b>香格里拉分支已启用：</b>D10–13 卡片已整体切换为分支行程（住香格里拉 2 晚 → 昆明 → 10/7 直达佛山）。取消勾选 D10 卡片内的开关可恢复主线。</span></div>
+
+  <!-- ============ §1 总览 ============ -->
+  <section id="overview">
+    <h2 class="sec-title"><span class="no">§1</span>行程总览与全程规则</h2>
+    <p class="sec-desc">点击任意一行可跳转并展开当日详情。每天卡片内含：锚点 / 驾驶 / 流水 / 吃住 / 提醒 / Plan B / 避坑，全部就地执行。</p>
+
+    <div class="card route-map">
+      <svg viewBox="0 0 1120 590" role="img" aria-label="全程路线进度图">
+        <!-- 主路：佛山(东) → 南宁·百色 → 昆明 → 大理 → 丽江(西北)，走向按真实地理 -->
+        <path class="rm-path" d="M 1040 430 C 960 445 880 465 800 460 C 710 455 620 415 540 380 C 470 350 400 335 330 330 C 290 327 250 280 240 190"/>
+        <!-- 香格里拉分支（虚线） -->
+        <path class="rm-path branch" d="M 240 190 C 225 150 210 110 200 70"/>
+
+        <!-- 城市站点 -->
+        <circle cx="1040" cy="430" r="5" class="rm-station"/><text x="1040" y="405" class="rm-city" text-anchor="middle">佛山</text>
+        <circle cx="800" cy="460" r="5" class="rm-station"/><text x="838" y="480" class="rm-city" text-anchor="start">南宁·百色</text>
+        <circle cx="540" cy="380" r="5" class="rm-station"/><text x="540" y="358" class="rm-city" text-anchor="middle">昆明</text>
+        <circle cx="330" cy="330" r="5" class="rm-station"/><text x="330" y="362" class="rm-city" text-anchor="middle">大理</text>
+        <circle cx="240" cy="190" r="5" class="rm-station"/><text x="263" y="194" class="rm-city" text-anchor="start">丽江</text>
+        <circle cx="200" cy="70" r="4" class="rm-station branch-st"/>
+        <text x="200" y="32" class="rm-city" text-anchor="middle">香格里拉</text>
+        <text x="200" y="52" class="rm-town" text-anchor="middle">D10-12 分支 · 住2晚</text>
+
+        <!-- 出程节点（主路上方，从右到左推进） -->
+        <g class="map-node" data-day="1" transform="translate(930,398)">
+          <circle class="dot" r="12"/><text class="num" y="1">1</text>
+          <text class="lb" x="0" y="-32" text-anchor="middle">启程</text>
+          <text class="dt" x="0" y="-20" text-anchor="middle">9/25 · 790km</text>
+        </g>
+        <g class="map-node" data-day="2" transform="translate(690,408)">
+          <circle class="dot" r="12"/><text class="num" y="1">2</text>
+          <text class="lb" x="0" y="-32" text-anchor="middle">入滇</text>
+          <text class="dt" x="0" y="-20" text-anchor="middle">9/26 · 530km</text>
+        </g>
+        <g class="map-node" data-day="3" transform="translate(575,342)">
+          <circle class="dot" r="12"/><text class="num" y="1">3</text>
+          <text class="lb" x="0" y="-32" text-anchor="middle">滇池</text>
+          <text class="dt" x="0" y="-20" text-anchor="middle">9/27</text>
+        </g>
+        <g class="map-node" data-day="4" transform="translate(445,352)">
+          <circle class="dot" r="12"/><text class="num" y="1">4</text>
+          <text class="lb" x="0" y="-32" text-anchor="middle">去大理</text>
+          <text class="dt" x="0" y="-20" text-anchor="middle">9/28 · 320km</text>
+        </g>
+        <!-- 大理两日（古城上方并排，同城紧挨） -->
+        <g class="map-node" data-day="5" transform="translate(390,262)">
+          <circle class="dot" r="12"/><text class="num" y="1">5</text>
+          <text class="lb" x="0" y="-32" text-anchor="middle">洱海</text>
+          <text class="dt" x="0" y="-20" text-anchor="middle">9/29</text>
+        </g>
+        <g class="map-node" data-day="6" transform="translate(295,262)">
+          <circle class="dot" r="12"/><text class="num" y="1">6</text>
+          <text class="lb" x="0" y="-32" text-anchor="middle">三塔·海东</text>
+          <text class="dt" x="0" y="-20" text-anchor="middle">9/30</text>
+        </g>
+        <!-- D7 压在大理→丽江段路径上，标签放左侧 -->
+        <g class="map-node" data-day="7" transform="translate(274,293)">
+          <circle class="dot" r="12"/><text class="num" y="1">7</text>
+          <text class="lb" x="-22" y="-5" text-anchor="end">沙溪</text>
+          <text class="dt" x="-22" y="8" text-anchor="end">10/1 · 180km</text>
+        </g>
+        <!-- 丽江两日（丽江上方并排，同城紧挨） -->
+        <g class="map-node" data-day="8" transform="translate(195,160)">
+          <circle class="dot" r="12"/><text class="num" y="1">8</text>
+          <text class="lb" x="-20" y="-5" text-anchor="end">雪山</text>
+          <text class="dt" x="-20" y="8" text-anchor="end">10/2</text>
+        </g>
+        <g class="map-node" data-day="9" transform="translate(305,155)">
+          <circle class="dot" r="12"/><text class="num" y="1">9</text>
+          <text class="lb" x="20" y="-5" text-anchor="start">机动</text>
+          <text class="dt" x="20" y="8" text-anchor="start">10/3</text>
+        </g>
+        <!-- 返程节点（主路下方，从左到右折返） -->
+        <g class="map-node" data-day="10" transform="translate(390,420)">
+          <circle class="dot" r="12"/><text class="num" y="1">10</text>
+          <text class="lb" x="0" y="36" text-anchor="middle">回昆明</text>
+          <text class="dt" x="0" y="48" text-anchor="middle">10/4 · 520km</text>
+        </g>
+        <g class="map-node" data-day="11" transform="translate(660,495)">
+          <circle class="dot" r="12"/><text class="num" y="1">11</text>
+          <text class="lb" x="0" y="36" text-anchor="middle">返程</text>
+          <text class="dt" x="0" y="48" text-anchor="middle">10/5 · 800km</text>
+        </g>
+        <g class="map-node" data-day="12" transform="translate(900,495)">
+          <circle class="dot" r="12"/><text class="num" y="1">12</text>
+          <text class="lb" x="0" y="36" text-anchor="middle">到家</text>
+          <text class="dt" x="0" y="48" text-anchor="middle">10/6 · 540km</text>
+        </g>
+        <g class="map-node" data-day="13" transform="translate(1040,460)">
+          <circle class="dot" r="12"/><text class="num" y="1">13</text>
+          <text class="lb" x="0" y="36" text-anchor="middle">机动</text>
+          <text class="dt" x="0" y="48" text-anchor="middle">10/7</text>
+        </g>
+      </svg>
+      <div class="rm-legend">
+        <span><i class="dotk k-done"></i>已完成</span>
+        <span><i class="dotk k-fut"></i>未完成</span>
+        <span class="tip">数字为天数 D1-D13 · 点击跳转当天卡片 · 虚线为香格里拉分支</span>
+      </div>
+    </div>
+
+    <div class="card table-scroll" style="margin-top:16px;padding:6px 10px">
+      <table class="ov">
+        <thead><tr><th>日期</th><th>行程</th><th>驾驶</th><th>住宿</th><th>核心锚点</th></tr></thead>
+        <tbody>
+          <tr><td class="djump" data-go="1">D1 · 9/25 五</td><td>佛山 → 广西百色 <em class="pill tag">中秋</em></td><td class="km">~790km · 9h</td><td>百色</td><td><b>20:00 抢大索道票</b></td></tr>
+          <tr><td class="djump" data-go="2">D2 · 9/26 六</td><td>百色 → 昆明</td><td class="km">~530km · 6.5h</td><td>昆明</td><td>15:00 前抵昆 · 可顺路石林</td></tr>
+          <tr><td class="djump" data-go="3">D3 · 9/27 日</td><td>昆明一日 <em class="pill tag">机动日</em></td><td class="km">0 或 160km 往返</td><td>昆明</td><td>滇池/石林二选一</td></tr>
+          <tr><td class="djump" data-go="4">D4 · 9/28 一</td><td>昆明 → 大理</td><td class="km">~320km · 4h</td><td>大理古城</td><td>确认海舌公园预约</td></tr>
+          <tr><td class="djump" data-go="5">D5 · 9/29 二</td><td>洱海海西田园线（骑行/步行）</td><td class="km">~60km</td><td>大理古城</td><td>09:00 前入磻溪 S 弯</td></tr>
+          <tr><td class="djump" data-go="6">D6 · 9/30 三</td><td>崇圣寺三塔 + 海东悬崖线</td><td class="km">~80km</td><td>大理古城</td><td>今晚加满油</td></tr>
+          <tr><td class="djump" data-go="7">D7 · 10/1 四</td><td>大理 → 丽江 <em class="pill tag">国庆</em></td><td class="km">~180km · 3h</td><td>丽江</td><td>09:00 前驶离大理</td></tr>
+          <tr><td class="djump" data-go="8">D8 · 10/2 五</td><td>玉龙雪山一日 <em class="pill tag">雪山</em></td><td class="km">~60km 往返</td><td>丽江</td><td><b>按预约时段入园</b></td></tr>
+          <tr><td class="djump" data-go="9">D9 · 10/3 六</td><td>丽江休闲（束河+黑龙潭）<em class="pill tag">机动日</em></td><td class="km muted">—</td><td>丽江</td><td>雪山顺延兜底</td></tr>
+          <tr><td class="djump" data-go="10">D10 · 10/4 日</td><td>丽江 → 昆明 <em class="pill tag">分支分歧日</em></td><td class="km">~520km · 6.5h</td><td>昆明</td><td>香格里拉分支开关</td></tr>
+          <tr><td class="djump" data-go="11">D11 · 10/5 一</td><td>昆明 → 广西南宁</td><td class="km">~800km · 8.5h</td><td>南宁</td><td>07:00 出发 · 强日</td></tr>
+          <tr><td class="djump" data-go="12">D12 · 10/6 二</td><td>南宁 → 佛山</td><td class="km">~540km · 6h</td><td>佛山</td><td>14:00 未过梧州则住</td></tr>
+          <tr><td class="djump" data-go="13">D13 · 10/7 三</td><td>全天机动 / 休整 <em class="pill tag">缓冲日</em></td><td class="km muted">—</td><td>佛山</td><td>缓冲/返程兜底</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note" style="margin-top:12px">返程双日为<b>「强弱错峰」</b>：D11 强（800km，全程高速、非最高峰日），D12 弱（540km，返程高峰首日只开半天、午后到家）。</div>
+    <div class="card ref-card" style="margin-top:16px;padding:18px">
+      <h4>全程通用驾驶规则（每天都适用）</h4>
+      <ul>
+        <li><b>驾驶红线</b>：常规日高速 ≤650km/7h、山路 ≤350km/4h；仅 D1（790km）与 D11（800km）为例外，均为全程高速；D1 趁中秋首日一鼓作气过南宁</li>
+        <li><b>疲劳驾驶是最大杀手</b>：每 2 小时进服务区休息 10 分钟；犯困立即眯 20 分钟，比任何提神饮料有效</li>
+        <li><b>油量剩 1/3 即加油</b>：山区加油站间隔远；10 月初山区 19:00 后天黑，<b>不赶夜路</b>，宁可多住一晚</li>
+        <li>山区弯道提前鸣笛、严禁弯道超车；长下坡挂低挡用发动机制动，忌长时间连续踩刹车</li>
+      </ul>
+    </div>
+
+    <h3 class="sec-title" style="margin-top:32px;font-size:20px"><span class="no">§1.5</span>费用预算总览</h3>
+    <p class="sec-desc">出发前先看总预算，做到心中有数。国庆价格波动大，建议预留 10% 弹性。</p>
+    <div class="card table-scroll" style="margin-top:16px;padding:6px 10px">
+      <table class="ov">
+        <thead><tr><th>项目</th><th>费用</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td class="km">油费</td><td class="km">≈2,750</td><td>全程约 3,900km，云贵山区油价偏高，按 0.70 元/km 估算</td></tr>
+          <tr><td class="km">过路费</td><td class="km">≈650</td><td>仅去程 9/25–9/27（中秋收费）+ 9/28–9/30（非假期）；<b>10/1 0:00–10/7 24:00 返程全程免费</b></td></tr>
+          <tr><td class="km">住宿</td><td class="km">≈4,400</td><td>11 晚（10/6 到家），国庆大理/丽江古城周边优质民宿 350–450 元/晚，按均价 400 估算</td></tr>
+          <tr><td class="km">门票</td><td class="km">≈900</td><td>崇圣寺 75 + 玉龙雪山 240 + 古维费 50（均为人均）；石林另计 130/人</td></tr>
+          <tr><td class="km">餐饮</td><td class="km">≈3,250</td><td>13 天，约 250 元/天（国庆景区周边餐饮上浮，含野生菌火锅等正餐）</td></tr>
+          <tr><td class="km">保险</td><td class="km">≈200</td><td>2 人旅游意外险（含高海拔条款约 100 元/人）</td></tr>
+          <tr><td class="km">其他</td><td class="km">≈1,200</td><td>停车费、氧气瓶、伴手礼、杂项（国庆停车费上浮）</td></tr>
+          <tr><td class="km"><b>合计</b></td><td class="km"><b>≈13,350</b></td><td><b>2 人总费用，人均约 6,700 元</b>；含石林 +260 元（2 人）；香格里拉分支 +1,800–2,300 元；<b>建议预留 10% 弹性（≈1,300 元）应对国庆价格波动</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ §2 行前准备 ============ -->
+  <section id="prep">
+    <h2 class="sec-title"><span class="no">§2</span>行前准备</h2>
+    <p class="sec-desc">出发前 7–10 天逐项完成并勾选。全部勾完，这趟旅程就成功了一半。</p>
+
+    <div class="prep-grid">
+      <div class="card prep-card">
+        <h4><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#2E5C4D" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>车辆检查（必须项）</h4>
+        <div class="tasks">
+          <label class="task"><input type="checkbox" data-id="p-car-1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">轮胎：磨损程度、胎压（含备胎）<small>建议胎压适当调高 0.2bar</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-car-2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">刹车系统：刹车片厚度、刹车油液位<small>长下坡多，刹车状态是重中之重</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-car-3"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">油液：机油 / 冷却液 / 玻璃水 / 转向助力油<small>确保足量且在有效期内</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-car-4"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">电瓶：检测电压<small>高原低温易导致亏电</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-car-5"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">灯光：近光 / 远光 / 雾灯 / 双闪 / 刹车灯</span></label>
+          <label class="task"><input type="checkbox" data-id="p-car-6"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">雨刷器：胶皮老化情况，必要时更换</span></label>
+        </div>
+      </div>
+
+      <div class="card prep-card">
+        <h4><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#2E5C4D" stroke-width="2"><path d="M12 3l2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z"/></svg>随车装备 · 应急与导航</h4>
+        <div class="tasks">
+          <label class="task"><input type="checkbox" data-id="p-g1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">车载充气泵（带数显）<small>应对碎石扎胎，云南山区救援慢</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-g2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">拖车绳（承重≥5吨）<small>泥泞路段脱困</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-g3"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">搭电线 / 应急启动电源<small>高原低温电瓶易亏电</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-g4"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">三角警示牌 + 反光背心<small>法律强制要求</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-g5"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">灭火器（2kg 干粉款）<small>部分检查站强制查验</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-g6"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">补胎胶条 / 补胎液<small>可应对直径≤6mm 扎钉漏气</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-g7"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">安全锤 + 强光手电<small>放扶手箱随手可取位置</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-g8"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">离线地图包：云南 + 广西全境<small>山区信号差，高德/百度提前下载</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-g9"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">车载充电器（双USB+Type-C 快充）</span></label>
+          <label class="task"><input type="checkbox" data-id="p-g10"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">大容量充电宝（2万 mAh 以上）<small>抢票、导航双保险</small></span></label>
+        </div>
+      </div>
+
+      <div class="card prep-card">
+        <h4><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#C05B28" stroke-width="2"><path d="M12 21s-7-4.5-9-9a5 5 0 019-3 5 5 0 019 3c-2 4.5-9 9-9 9z"/></svg>高原健康与防护</h4>
+        <div class="tasks">
+          <label class="task"><input type="checkbox" data-id="p-g11"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">便携式氧气瓶若干<small>古城药店 15–25 元/罐，景区售价翻倍，在大理/丽江市区采购</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-g12"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">葡萄糖口服液 / 粉<small>快速补能，缓解高反</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-g13"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">红景天胶囊<small>出发前 3–5 天开始服用</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-g14"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">SPF50+ PA++++ 防晒霜<small>高原紫外线强，阴天也会晒伤</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-g15"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">偏光墨镜<small>雪地+高原反光强烈，驾驶也需要</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-g16"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">宽檐遮阳帽 + 防晒衣</span></label>
+          <label class="task"><input type="checkbox" data-id="p-g17"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">药品：感冒药、肠胃药、晕车药（茶苯海明）、碘伏棉签、创可贴<small>云南饮食偏酸辣，山区医疗点少；盘山路弯道多</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-g18"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">咖啡 / 提神饮料<small>单人驾驶，服务区休息时补一杯</small></span></label>
+        </div>
+      </div>
+
+      <div class="card prep-card">
+        <h4><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#B98F1F" stroke-width="2"><rect x="4" y="6" width="16" height="13" rx="2"/><path d="M4 11h16M8 3v5M16 3v5"/></svg>衣物与生活物品</h4>
+        <div class="tasks">
+          <label class="task"><input type="checkbox" data-id="p-g19"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">三合一冲锋衣<small>昼夜温差 10–15℃，防风防雨，一衣三穿</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-g20"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">薄羽绒服 / 抓绒内胆<small>雪山山顶可能 0–5℃</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-g21"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">速干长袖/长裤 2–3 套 + 速干长裤/软壳裤<small>洋葱式穿搭；牛仔裤遇雨难干，失温风险高</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-g22"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">中高帮防滑徒步鞋（防水最佳）<small>提前磨合好</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-g23"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">折叠晴雨伞 + 保温水壶<small>高原阵雨说下就下；温水少量多次</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-g24"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">零钱现金 1000–2000 元<small>偏远地区信号差，部分小摊只收现金</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-g25"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">软底拖鞋<small>不开车时让脚放松</small></span></label>
+        </div>
+      </div>
+
+      <div class="card prep-card">
+        <h4><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#A63A2B" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3"/></svg>证件与保险（最大兜底项）</h4>
+        <div class="tasks">
+          <label class="task"><input type="checkbox" data-id="p-ins1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">身份证 ×2、驾驶证、行驶证、车辆保险单（电子/纸质）</span></label>
+          <label class="task"><input type="checkbox" data-id="p-ins2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">购买 2 份旅游意外险（覆盖 9/25–10/7）<small>确认保单<b>高海拔免责条款</b>：多数普通意外险对 3500m/5000m 以上免责，需选含高海拔的户外险种</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-ins3"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">附加道路救援服务（拖车/搭电/换胎）<small>保险公司 APP 通常免费送，确认覆盖云桂两省</small></span></label>
+          <label class="task"><input type="checkbox" data-id="p-ins4"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">保单紧急救援电话存入手机通讯录</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;padding:18px">
+      <h4 style="font-family:var(--serif);font-size:16px;color:var(--pine-deep)">⏰ 预订与抢票时间表（错过节点 = 计划失效）</h4>
+      <div class="tasks" style="margin-top:10px">
+        <label class="task"><input type="checkbox" data-id="p-bk1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt"><b>立即</b> · 预订全程住宿<small>百色高铁站片区（9/25）· 昆明滇池路沿线（9/26–27）· 大理古城北门外或才村（9/28–30）· 丽江古城北门玉河广场（10/1–3）· 昆明官渡区关上（10/4）· 南宁凤岭东站片区（10/5），全部选带免费停车房源；大理/丽江国庆价上浮 30–50%，先订这两地</small></span></label>
+        <label class="task"><input type="checkbox" data-id="p-bk2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt"><b>出发前</b> · 完成「丽江旅游集团」小程序注册 + 人脸认证 + 录入 2 人证件信息<small>唯一官方渠道；同一身份证 90 天内限购 1 次大索道，抢到没去也占用资格</small></span></label>
+        <label class="task"><input type="checkbox" data-id="p-bk3"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt"><b class="big">9/25（出发日）20:00 整</b> · 抢 10/2 玉龙雪山大索道票<small>提前 7 天放票、旺季秒空；提前填好信息、用手机流量不用酒店 WiFi、拼图验证一次拉到位；抢不到立即刷新捡退票回滚，持续 5–10 分钟</small></span></label>
+        <label class="task"><input type="checkbox" data-id="p-bk4"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt"><b>10/1 21:00</b> · 若大索道未抢到，放票时抢云杉坪索道（Plan B）</span></label>
+        <label class="task"><input type="checkbox" data-id="p-bk5"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt"><b>D4 晚</b> · 预约海舌生态公园<small>官方小程序，每日限流，未预约无法入园</small></span></label>
+        <label class="task"><input type="checkbox" data-id="p-bk6"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt"><b>出发前 3–5 天</b> · 下单旅游意外险（先确认高海拔条款再付款）</span></label>
+      </div>
+      <div class="note warn">⚠️ 出发前 72 小时核对：① 小程序内核对大索道实时票价与放票规则（当前约 140 元/人、含环保车；进山费 100 元/人另付）② 古维费 50 元/人、365 天有效，线上可缴，黑龙潭与雪山票务环节核验 ③ 玉龙雪山自驾车统一停甘海子游客中心、内部换乘环保车 ④ 离线地图包下载完毕。</div>
+    </div>
+  </section>
+
+  <!-- ============ §3 每日行程 ============ -->
+  <section id="days">
+    <h2 class="sec-title"><span class="no">§3</span>每日详细行程</h2>
+    <p class="sec-desc">点击日期卡片展开。普通条目勾选 = 已完成；橙虚线框为<b>抉择项</b>（二选一联动）；「后手」为当天备选，「避雷」仅列当天相关的坑。</p>
+
+    <!-- D1 -->
+    <article class="day" id="day-1" data-day="1" data-anchor="20:00 抢玉龙雪山大索道票">
+      <button class="day-head" aria-expanded="false">
+        <span class="d-badge">D1</span>
+        <span class="d-main"><span class="d-title">佛山 → 广西百色</span><span class="d-sub">9/25 周五 · 中秋节 · 出程高峰 · 一口气过南宁</span></span>
+        <span class="d-chips"><i class="chip-mini">790km</i><i class="chip-mini">9h</i></span>
+        <span class="d-prog"><i></i></span>
+        <svg class="d-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="day-body"><div class="day-body-in">
+        <h5>今日重点</h5>
+        <div class="note"><b>20:00 整抢 10/2 玉龙雪山大索道票</b>——今天最重要的一件事，闹钟定好；抢票动作见下方流水与「行前·抢票时间表」。</div>
+        <h5>行车</h5>
+        <div class="route">佛山 → 广明高速 → 深岑高速 → 广昆高速 → 南宁绕城 → 百色 ｜ 790km / 纯驾驶约 9h，含休息约 10.5h（已含中秋拥堵余量）</div>
+        <div class="note">中秋假期高速<b>不免费</b>（国庆免费从 10/1 零时开始）；出程高峰从上午持续到晚间，做好拥堵 1–2 小时的心理预期。</div>
+        <h5>动线</h5>
+        <div class="tasks">
+          <label class="task"><input type="checkbox" data-id="d1-t1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt"><b>06:30–07:00</b>出发（中秋出程高峰，务必赶早）<small>早餐车上解决；出发前加满油；两人轮换驾驶</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d1-t2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">12:30 服务区午餐<small>每 2 小时进服务区休息 10 分钟</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d1-t3"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">15:30–16:30 过南宁绕城，<b>不下高速</b>继续西行<small>比在南宁落宿多推进 250km，明天只剩 530km</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d1-t3b"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">17:30–18:30 抵达百色，入住高铁站片区酒店</span></label>
+          <label class="task"><input type="checkbox" data-id="d1-t4"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt"><b class="big">20:00 整</b>：抢大索道票<small>手机流量不用酒店 WiFi；拼图一次拉到位；抢不到刷新捡退票，持续 5–10 分钟</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d1-t5"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">晚餐：龙景新区万景城不夜街夜市（车程约 10 分钟）或酒店周边<small>烧鸭粉、夜市烧烤；21:30 前回房</small></span></label>
+        </div>
+        <h5>食宿</h5>
+        <p class="stay"><b>住宿</b>：百色右江区·<b>高铁站片区</b>（站前大道/进站大道一带，城市便捷/维也纳等连锁，多带免费停车场），约 150–250 元/晚；百色东/西出口下高速进城均约 10 分钟；或选<b>龙景新区</b>万景城一带（夜市+好评酒店多）</p>
+        <h5>叮咛</h5>
+        <div class="tasks">
+          <label class="task"><input type="checkbox" data-id="d1-n2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">今晚早睡——明天 530km 中等强度，两人可轮换驾驶</span></label>
+          <label class="task"><input type="checkbox" data-id="d1-n3"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">弹性：17:30 前过百色且状态极好 → 可续到富宁住（+170km，明日仅剩约 350km）<small>富宁为县城、住宿一般，非必要不推荐</small></span></label>
+        </div>
+        <h5>后手</h5>
+        <div class="note">中秋拥堵严重 → 就近收车（南宁/平果/田东均有连锁酒店，勿硬扛夜跑）；若严重滞后只到梧州/贵港 → D2 走到百色住，D3 中午前补完进昆（下午滇池/花市，石林取消），机动规则见 D3 卡片。</div>
+      </div></div>
+    </article>
+
+    <!-- D2 -->
+    <article class="day" id="day-2" data-day="2" data-anchor="07:30 出发 · 15:00 抵昆 · 顺路石林可选">
+      <button class="day-head" aria-expanded="false">
+        <span class="d-badge">D2</span>
+        <span class="d-main"><span class="d-title">百色 → 昆明</span><span class="d-sub">9/26 周六 · 中长驾驶日 · 下午抵昆</span></span>
+        <span class="d-chips"><i class="chip-mini">530km</i><i class="chip-mini">6.5h</i></span>
+        <span class="d-prog"><i></i></span>
+        <svg class="d-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="day-body"><div class="day-body-in">
+        <h5>今日重点</h5>
+        <div class="note"><b>07:30 出发 · 15:00–16:00 抵昆</b>——比南宁直发（780km）减负 250km，全天从容；到店后可先去海埂大坝看滇池日落（车程约 10 分钟）。</div>
+        <h5>行车</h5>
+        <div class="route">百色 → 广昆高速(G80) → 石林 → 昆明 ｜ 530km / 纯驾驶约 6.5h，含休息约 8h（<b>每 2h 进服务区休息</b>）</div>
+        <div class="note">进入云贵段后长下坡多：<b>挂低挡用发动机制动</b>，忌长时间连续踩刹车；坡底服务区主动停车检查刹车与轮毂温度。</div>
+        <h5>动线</h5>
+        <div class="tasks">
+          <label class="task"><input type="checkbox" data-id="d2-t1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt"><b>07:30 出发</b>，酒店早餐后上路，出发前加满油<small>比南宁直发减负 250km，晚半小时也有余量</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d2-t2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">10:00 服务区休息 · 12:30 服务区午餐<small>油量剩 1/3 即加油；犯困立即眯 20 分钟</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d2-t3"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt"><b>弹性·顺路石林</b>：14:00 前后过石林出口，状态好可下高速游石林（出口即达、零绕路，游 2.5–3h）<small>门票 130 + 电瓶车 25 元；选此项则 18:30 前后抵昆，D3 石林方案自动取消</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d2-t4"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">15:00–16:00 抵达昆明（游石林则 18:30 前后），入住酒店，今晚加满油</span></label>
+          <label class="task"><input type="checkbox" data-id="d2-t5"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">晚上就近吃饭休整（过桥米线、汽锅鸡），不安排景点；检查大索道订单与入园时段</span></label>
+        </div>
+        <h5>食宿</h5>
+        <p class="stay"><b>住宿</b>：昆明<b>西山区·滇池路沿线</b>（南亚风情第壹城—公园1903—海埂片区），约 200–350 元/晚，选带停车场房源；海埂大坝约 10 分钟车程，明早走昆明西入口上杭瑞高速约 20 分钟，<b>两晚续住同店</b>；<b>撤退住宿</b>：富宁/砚山县城连锁约 150–250 元/晚</p>
+        <h5>后手</h5>
+        <div class="note">① D1 被拥堵拖住（落脚南宁/平果/田东）→ 今天早起补跑剩余段（南宁出发 780km 需 07:00 前出发），下午抵昆照常。<br>② 极端情况 14:00 未过富宁 → 住富宁/砚山县城，<b>D3 上午补完剩余约 250–330km，中午抵昆</b>，滇池/花市顺延到下午，石林自动取消。</div>
+      </div></div>
+    </article>
+
+    <!-- D3 -->
+    <article class="day milestone" id="day-3" data-day="3" data-anchor="滇池/石林二选一 · 机动兜底日">
+      <button class="day-head" aria-expanded="false">
+        <span class="d-badge">D3</span>
+        <span class="d-main"><span class="d-title">昆明一日游 <span class="branch-tag">机动日</span></span><span class="d-sub">9/27 周日 · 中秋假期尾 · 机动兜底</span></span>
+        <span class="d-chips"><i class="chip-mini">0 或 160km</i></span>
+        <span class="d-prog"><i></i></span>
+        <svg class="d-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="day-body"><div class="day-body-in">
+        <h5>抉择（二选一）</h5>
+        <div class="tasks">
+          <label class="task dec"><input type="checkbox" data-id="d3-a" data-group="g-d3"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">方案 A · 滇池 → 西山远眺 → 斗南花市<em class="pill rec">推荐</em>
+            <ul class="sub"><li><b>滇池</b>：免费，1–2 小时；红嘴鸥 11 月后才到，9 月底无鸥但湖景依旧</li><li><b>斗南花市</b>：免费，白天零售、晚 8 点后批发最热闹；买花可快递回家</li><li>零长途驾驶，保存体力</li></ul></span></label>
+          <label class="task dec"><input type="checkbox" data-id="d3-b" data-group="g-d3"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">方案 B · 石林风景区
+            <ul class="sub"><li>门票 130 元/人 + 电瓶车 25 元/人</li><li>市区往返约 160km / 3h 车程，<b>单人驾驶慎选</b></li><li>上午去光线好</li><li>更省力替代：D2 途中顺路游（见 D2 卡片弹性项），零绕路</li></ul></span></label>
+        </div>
+        <p class="ghint" data-g="g-d3">未选择 · 二选一</p>
+        <h5>动线</h5>
+        <div class="tasks">
+          <label class="task"><input type="checkbox" data-id="d3-t1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">白天按所选项执行，晚餐：野生菌火锅<small>9 月底菌子季尾声，选正规餐厅，煮透 20 分钟以上，不自己采摘</small></span></label>
+        </div>
+        <h5>避雷</h5>
+        <div class="note warn">石林景区门口「彝族服饰拍照」先谈价（正规约 30 元含精修），不谈价易被收冤枉钱；野生菌必须煮透 20 分钟以上。</div>
+        <h5>后手</h5>
+        <div class="note"><b>雨天</b>：云南省博物馆（免费预约）+ 斗南花市。<b>延误半天</b>：砍掉石林只留滇池+花市。<b>延误一整天</b>：全天休整补眠——本日就是为前两天兜底存在的。</div>
+      </div></div>
+    </article>
+
+    <!-- D4 -->
+    <article class="day" id="day-4" data-day="4" data-anchor="今晚确认海舌生态公园预约">
+      <button class="day-head" aria-expanded="false">
+        <span class="d-badge">D4</span>
+        <span class="d-main"><span class="d-title">昆明 → 大理</span><span class="d-sub">9/28 周一 · 非假期顺畅窗口</span></span>
+        <span class="d-chips"><i class="chip-mini">320km</i><i class="chip-mini">4h</i></span>
+        <span class="d-prog"><i></i></span>
+        <svg class="d-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="day-body"><div class="day-body-in">
+        <h5>今日重点</h5>
+        <div class="note"><b>今晚确认海舌生态公园预约</b>（明日前往；每日限流，未预约无法入园）。</div>
+        <h5>行车</h5>
+        <div class="route">昆明 → 杭瑞高速 → 大理 ｜ 320km / 4h</div>
+        <div class="note">9/28–9/30 是<b>非假期窗口</b>，全程顺畅，是走完大理段的最好时机。</div>
+        <h5>动线</h5>
+        <div class="tasks">
+          <label class="task"><input type="checkbox" data-id="d4-t1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">09:00 出发，13:00 抵达大理，入住古城附近</span></label>
+          <label class="task"><input type="checkbox" data-id="d4-t2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">下午逛大理古城：人民路、洋人街、五华楼；傍晚登城墙看日落</span></label>
+          <label class="task"><input type="checkbox" data-id="d4-t3"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">晚餐：白族土八碗、酸辣鱼、乳扇</span></label>
+          <label class="task"><input type="checkbox" data-id="d4-t4"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">今晚确认海舌公园预约</span></label>
+        </div>
+        <h5>食宿</h5>
+        <p class="stay"><b>住宿</b>：大理古城<b>北门外</b>（大丽路/214 国道一带，带车位院落民宿）或<b>才村码头片区</b>（离洱海最近、看日出佳，但车位紧张须提前确认），约 200–400 元/晚（国庆价），<b>三晚续住同店免搬行李</b>；<b>古城内机动车禁入</b>，车停城外停车场（5–10 元/小时）</p>
+        <h5>避雷</h5>
+        <div class="note warn">路边水果摊先问清计价单位（「斤」还是「两」），看着称重。</div>
+      </div></div>
+    </article>
+
+    <!-- D5 -->
+    <article class="day" id="day-5" data-day="5" data-anchor="09:00 前入磻溪 S 弯 · 廊道禁外部机动车">
+      <button class="day-head" aria-expanded="false">
+        <span class="d-badge">D5</span>
+        <span class="d-main"><span class="d-title">洱海海西田园线（骑行/步行）</span><span class="d-sub">9/29 周二 · 零驾驶强度</span></span>
+        <span class="d-chips"><i class="chip-mini">~60km</i></span>
+        <span class="d-prog"><i></i></span>
+        <svg class="d-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="day-body"><div class="day-body-in">
+        <h5>今日重点</h5>
+        <div class="note"><b>09:00 前进入磻溪 S 弯段</b>（人少光线柔；10 点后旅行团涌入）。</div>
+        <h5>叮咛（廊道硬规则）</h5>
+        <div class="note warn">海西生态廊道（磻溪村至阳南溪段等）<b>全天禁止外部机动车驶入，含外部租的电瓶车</b>，违者电子抓拍罚 150–200 元。正确姿势：车停外围停车场（10 元左右/次）→ 廊道内乘官方观光电瓶车或租廊道内共享单车/电瓶车（约 15–20 元/小时）。古城租的小电驴只能在廊道外国道骑行。</div>
+        <h5>动线</h5>
+        <div class="tasks">
+          <label class="task"><input type="checkbox" data-id="d5-t0"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">可选清晨：龙龛码头日出<small>10 月初日出约 06:45，06:00 前占位；红杉、晨雾、浅滩渔船，洱海日出 TOP1；不看日出可睡到自然醒，直接从喜洲开始</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d5-t1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">上午：磻溪村 S 弯<small>免费；弧形临水步道，日系镰仓既视感</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d5-t2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">上午：喜洲古镇（2–3 小时）<small>免费（严家大院等小景点收费）；必吃喜洲破酥粑粑（咸味）、烤乳扇；四方街、转角楼、扎染体验约 80 元/人；稻田 9 月底渐黄</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d5-t3"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">下午：海舌生态公园（约 1 小时）<small>免费，须提前预约（每日限流）；伸入洱海的半岛，人少清净</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d5-t4"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">晚餐：喜洲白族菜或返回古城</span></label>
+        </div>
+        <h5>避雷</h5>
+        <div class="note warn">拍摄当地人（尤其白族老人、扎染匠人）事先征得同意；外部租的电驴进不了廊道，别信「环洱海电驴一日游」。</div>
+        <h5>后手</h5>
+        <div class="note"><b>雨天</b>：崇圣寺三塔（半天）+ 大理州博物馆 + 古城咖啡馆，环湖顺延到 D6。雨后的苍山云雾+洱海比晴天更出片，早上下雨不必放弃下午出门。</div>
+      </div></div>
+    </article>
+
+    <!-- D6 -->
+    <article class="day" id="day-6" data-day="6" data-anchor="今晚加满油 · 明天进入迁徙模式">
+      <button class="day-head" aria-expanded="false">
+        <span class="d-badge">D6</span>
+        <span class="d-main"><span class="d-title">崇圣寺三塔 + 洱海海东悬崖线</span><span class="d-sub">9/30 周三 · 大理收官</span></span>
+        <span class="d-chips"><i class="chip-mini">~80km</i></span>
+        <span class="d-prog"><i></i></span>
+        <svg class="d-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="day-body"><div class="day-body-in">
+        <h5>今日重点</h5>
+        <div class="note"><b>今晚加满油、收拾好行李</b>——明天进入「迁徙模式」，且 9/30 晚起各地出程车流增多。</div>
+        <h5>动线</h5>
+        <div class="tasks">
+          <label class="task"><input type="checkbox" data-id="d6-t1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">上午：崇圣寺三塔文化旅游区（2–3 小时）<small>门票 75 元/人（电瓶车 35 元可选，体力好可步行）；大理地标，背靠苍山面朝洱海；若 D5 雨天已来过，上午改睡懒觉+古城补漏</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d6-t2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">14:00 出发海东线（海东路允许机动车）：双廊古镇（2–3 小时）<small>免费（玉几岛 10 元）；停车：双廊南口生态停车场 300 车位 15 元/天；远观杨丽萍太阳宫、临海咖啡厅</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d6-t3"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">鹿卧山遗址（30 分钟）<small>免费；废弃崖壁山洞、天然窗框机位，小众出片地</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d6-t4"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">挖色小普陀（30 分钟）<small>免费；迷你湖心小岛，岸边礁石拍照（9 月底无海鸥）</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d6-t5"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">理想邦「大理圣托里尼」（1–2 小时）<small>免费；16:00 后光线柔和最佳；商业化较重，拍照打卡即可</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d6-t6"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">傍晚：兴盛大桥夜景<small>19:30–20:30 蓝调时刻最佳</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d6-t7"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">晚餐：海东沿线白族农家乐，或返回古城</span></label>
+        </div>
+        <h5>叮咛</h5>
+        <div class="note">海东悬崖公路弯道多、限速 60km/h，午后风力大，<b>不要在悬崖公路随意停车</b>；今晚务必加满油。</div>
+      </div></div>
+    </article>
+
+    <!-- D7 -->
+    <article class="day milestone" id="day-7" data-day="7" data-anchor="09:00 前驶离大理 · 沙溪二选一">
+      <button class="day-head" aria-expanded="false">
+        <span class="d-badge">D7</span>
+        <span class="d-main"><span class="d-title">大理 → 丽江 <span class="branch-tag">国庆</span></span><span class="d-sub">10/1 周四 · 国庆出程高峰 · 可选顺路沙溪</span></span>
+        <span class="d-chips"><i class="chip-mini">180km</i><i class="chip-mini">3h</i></span>
+        <span class="d-prog"><i></i></span>
+        <svg class="d-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="day-body"><div class="day-body-in">
+        <h5>今日重点</h5>
+        <div class="note"><b>09:00 前驶离大理</b>——10/1 国庆出程高峰，晚了 180km 能开出 5 小时。</div>
+        <h5>抉择（沙溪，二选一）</h5>
+        <div class="tasks">
+          <label class="task dec"><input type="checkbox" data-id="p-shaxi-a" data-group="g-shaxi"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">顺路版 · 大理→丽江途中加停沙溪 2–3 小时<em class="pill rec">推荐</em>
+            <ul class="sub"><li>茶马古道唯一幸存古集市：古镇 + 玉津桥 + 古戏台；免费、无过度商业化</li><li>鹤剑兰高速沙溪支线已通车，导航「沙溪古镇游客中心」，停车 10 元/天；全程驾驶约多 1.5 小时，不改住宿</li></ul></span></label>
+          <label class="task dec"><input type="checkbox" data-id="p-shaxi-b" data-group="g-shaxi"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">住一晚版 · 今天住沙溪老宅民宿
+            <ul class="sub"><li>换来一晚无人从众的古镇夜晚 + 清晨玉津桥晨雾</li><li>雪山顺延至 D9：抢票改为 <b>9/26 20:00 抢 10/3 场次</b>；D8 上午沙溪→丽江+下午古城；大研古城只剩半天，机动日被占用</li></ul></span></label>
+        </div>
+        <p class="ghint" data-g="g-shaxi">未选择 · 二选一</p>
+        <h5>行车</h5>
+        <div class="route">大理 → 大丽高速 → 丽江 ｜ 180km / 3h</div>
+        <h5>动线</h5>
+        <div class="tasks">
+          <label class="task"><input type="checkbox" data-id="d7-t1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt"><b>09:00 前驶离大理</b></span></label>
+          <label class="task"><input type="checkbox" data-id="d7-t2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">12:00 抵达丽江，入住酒店</span></label>
+          <label class="task"><input type="checkbox" data-id="d7-t3"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">下午逛大研古城：四方街、大水车、木府（40 元可选）</span></label>
+          <label class="task"><input type="checkbox" data-id="d7-t4"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">晚上古城夜景<small>酒吧街严防酒托：陌生人搭讪约酒一律拒绝</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d7-t5"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">晚餐：腊排骨火锅、土鸡火锅；氧气瓶在古城药店买好（15–25 元/罐）</span></label>
+          <label class="task"><input type="checkbox" data-id="d7-t6"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">今晚早睡，确认明日大索道订单与入园时段</span></label>
+        </div>
+        <h5>食宿</h5>
+        <p class="stay"><b>住宿</b>：丽江古城<b>北门·玉河广场周边</b>带车位客栈（北门停车场步行约 5 分钟入古城），约 250–500 元/晚（国庆价），<b>三晚续住同店</b>；<b>避开古城中心酒吧街（吵至凌晨）与南门旅行团聚集区</b>；古城内禁止机动车，车停城外停车场</p>
+        <h5>避雷</h5>
+        <div class="note warn"><b>拉市海「低价骑马/划船」是丽江第一大坑</b>：客栈老板、司机热心推荐的「100 元茶马古道」多为低价团套路，现场层层加价——遇到推荐一律婉拒。酒吧街「艳遇搭讪」多为酒托，账单数千元。古城银器按标价 7 折还价。雪山票务只认「丽江旅游集团」小程序，黄牛代抢可能是假票。</div>
+      </div></div>
+    </article>
+
+    <!-- D8 -->
+    <article class="day milestone" id="day-8" data-day="8" data-anchor="玉龙雪山大索道 · 按预约时段尽早入园">
+      <button class="day-head" aria-expanded="false">
+        <span class="d-badge">D8</span>
+        <span class="d-main"><span class="d-title">玉龙雪山一日 <span class="branch-tag">全程海拔最高点</span></span><span class="d-sub">10/2 周五 · 大索道票 = 9/25 晚抢的票</span></span>
+        <span class="d-chips"><i class="chip-mini">60km 往返</i><i class="chip-mini">4506m</i></span>
+        <span class="d-prog"><i></i></span>
+        <svg class="d-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="day-body"><div class="day-body-in">
+        <h5>今日重点</h5>
+        <div class="note"><b>按预约时段尽早入园</b>（当天风大时缆车班次易停运）。费用：进山费 100 元/人 + 大索道约 140 元/人（含景区环保车，以小程序实时价为准）。<b>牦牛坪索道自 2026 年 3 月起停运改扩建（约 2028 年恢复），勿排入计划。</b></div>
+        <h5>抉择（二选一）</h5>
+        <div class="tasks">
+          <label class="task dec"><input type="checkbox" data-id="d8-a" data-group="g-d8"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">冰川公园大索道 · 登顶 4680m<em class="pill rec">推荐</em>
+            <ul class="sub"><li>提前 7 天 20:00 抢票、旺季秒空、90 天限购 1 次</li><li>徒步至 4680m 观景台，万年冰川震撼</li></ul></span></label>
+          <label class="task dec"><input type="checkbox" data-id="d8-b" data-group="g-d8"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">云杉坪小索道 + 蓝月谷<em class="pill pb">Plan B</em>
+            <ul class="sub"><li>提前 1 天 21:00 放票，好抢；海拔 3240m，高反风险低</li><li>高山草甸 + 原始森林 + 雪山远景，舒适度更高，体验不差</li></ul></span></label>
+        </div>
+        <p class="ghint" data-g="g-d8">未选择 · 二选一</p>
+        <h5>动线（大索道方案时间轴）</h5>
+        <div class="tasks">
+          <label class="task"><input type="checkbox" data-id="d8-t1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt"><b>06:45</b> 古城出发（约 40 分钟车程）</span></label>
+          <label class="task"><input type="checkbox" data-id="d8-t2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt"><b>07:30</b> 车停甘海子游客中心停车场<small>自驾车不能进景区内部，乘环保车至索道下站</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d8-t3"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt"><b>08:30–11:30</b> 大索道上冰川公园（4506m），徒步至 4680m 观景台<small>步道放慢节奏；头胀胸闷属正常；严重呕吐/意识模糊立即下撤</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d8-t4"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt"><b>12:00</b> 下山午餐<small>自带干粮更稳；雪厨自助约 60 元/人</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d8-t5"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt"><b>13:30–16:00</b> 环保车至蓝月谷<small>下午光线最蓝；电瓶车 50 元不值，步行 1–2 小时足够</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d8-t6"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt"><b>16:30</b> 返回丽江</span></label>
+        </div>
+        <h5>高反</h5>
+        <div class="tasks">
+          <label class="task"><input type="checkbox" data-id="d8-n1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">上山前不剧烈运动、不饮酒；厚外套 + 帽子 + 手套 + 墨镜必备<small>山顶风大体感 0–5℃；3000m+ 自然吸气车动力损失明显（今日自驾段注意）</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d8-n2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">下山当晚<b>不洗澡、不洗头</b><small>加速血液循环易诱发高反，上过 4500m 后尤其注意</small></span></label>
+        </div>
+        <h5>后手</h5>
+        <div class="note">大索道没抢到 → 云杉坪 + 蓝月谷全天照常执行（好抢、舒适度高）；抢不到也可盯 21:00 前后退票回滚。若全天大风停运 → 改 D9 机动日顺延（见 D9 卡片）。</div>
+      </div></div>
+    </article>
+
+    <!-- D9 -->
+    <article class="day" id="day-9" data-day="9" data-anchor="雪山顺延/疲劳兜底专用 · 无固定锚点">
+      <button class="day-head" aria-expanded="false">
+        <span class="d-badge">D9</span>
+        <span class="d-main"><span class="d-title">丽江休闲日 <span class="branch-tag">机动日</span></span><span class="d-sub">10/3 周六 · 雪山顺延/疲劳兜底专用</span></span>
+        <span class="d-chips"><i class="chip-mini">市内</i></span>
+        <span class="d-prog"><i></i></span>
+        <svg class="d-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="day-body"><div class="day-body-in">
+        <h5>今日重点</h5>
+        <div class="note">无固定锚点——本日为<b>雪山顺延、行程延误、疲劳兜底</b>专用：前面顺利则按流水休闲，不安排长途驾驶；若 D8 启用了本日，以下流水整体取消。</div>
+        <h5>动线</h5>
+        <div class="tasks">
+          <label class="task"><input type="checkbox" data-id="d9-t1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">上午：束河古镇（2–3 小时）<small>免费；比大研安静、更原生态，停车方便</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d9-t2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">下午弹性：白沙古镇<small>免费，束河再往北约 5km，雪山同框机位 + 扎染体验，可去可不去</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d9-t3"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">下午：黑龙潭公园 + 象山市场<small>黑龙潭免费开放但<b>核验古城维护费</b>（50 元/人、365 天有效，线上可缴），天气好可拍雪山倒影；象山市场本地烟火气，腊排骨火锅</small></span></label>
+          <label class="task"><input type="checkbox" data-id="d9-t4"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">晚上：大研古城听民谣、逛夜景</span></label>
+          <label class="task"><input type="checkbox" data-id="d9-t5"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">选购伴手礼<small>鲜花饼认准嘉华等正规品牌（散装三无慎买）；普洱茶；银器按标价 7 折还价；牦牛肉干超过 80 元/斤慎买</small></span></label>
+        </div>
+        <h5>后手</h5>
+        <div class="note"><b>雪山顺延</b>：D8 抢不到票/大风停运 → 雪山行程整体移到今天执行。<b>疲劳</b>：全天古城发呆，哪里都不去。<b>雨天</b>：木府 + 白沙壁画 + 观音峡（半室内）。</div>
+      </div></div>
+    </article>
+
+    <!-- D10 -->
+    <article class="day" id="day-10" data-day="10" data-anchor="纯赶路 · 香格里拉分支开关日" data-anchor-branch="山路 180km · 虎跳峡 · 住香格里拉">
+      <button class="day-head" aria-expanded="false">
+        <span class="d-badge">D10</span>
+        <span class="d-main">
+          <span class="d-title v-main">丽江 → 昆明 <span class="branch-tag">分支分歧日</span></span>
+          <span class="d-sub v-main">10/4 周日 · 纯赶路日 · 香格里拉分支由此分岔</span>
+          <span class="d-title v-branch">丽江 → 香格里拉 <span class="branch-tag">香格里拉分支</span></span>
+          <span class="d-sub v-branch">10/4 周日 · 山路 180km · 途经虎跳峡 · 住香格里拉（3300m）</span>
+        </span>
+        <span class="d-chips v-main"><i class="chip-mini">520km</i><i class="chip-mini">6.5h</i></span>
+        <span class="d-chips v-branch"><i class="chip-mini">180km</i><i class="chip-mini">4h</i></span>
+        <span class="d-prog"><i></i></span>
+        <svg class="d-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="day-body"><div class="day-body-in">
+        <h5>抉择（分支开关）</h5>
+        <div class="tasks">
+          <label class="task dec"><input type="checkbox" data-id="sh-switch"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">启用香格里拉分支（D10–13 卡片整体切换为分支行程）<em class="pill warnp">需第二驾驶员</em></span></label>
+        </div>
+        <div class="v-main">
+          <h5>今日重点</h5>
+          <div class="note"><b>今晚超市采购面包/水果/卤味</b>——明天午餐车上解决，省下服务区排队时间用于休息。</div>
+          <h5>分支预览（勾选后 D10–13 整体切换）</h5>
+          <table style="width:100%;border-collapse:collapse;font-size:13px;margin-top:8px">
+            <tr><td style="padding:6px 4px;border-bottom:1px dashed var(--line);color:var(--ink2);white-space:nowrap"><span class="kbd">D10 10/4</span></td><td style="padding:6px 4px;border-bottom:1px dashed var(--line)">丽江 → 香格里拉 ~180km 山路（途经虎跳峡 45 元、小中甸牧场；出发前查虎跳峡当日开放状态）</td></tr>
+            <tr><td style="padding:6px 4px;border-bottom:1px dashed var(--line);color:var(--ink2)"><span class="kbd">D11 10/5</span></td><td style="padding:6px 4px;border-bottom:1px dashed var(--line)">普达措 138 元 + 松赞林寺 90 元 + 纳帕海，~80km（普达措 08:00–16:00，提前 1 天「一部手机游云南」APP 购票；两处合计 6–7 小时，很满）</td></tr>
+            <tr><td style="padding:6px 4px;border-bottom:1px dashed var(--line);color:var(--ink2)"><span class="kbd">D12 10/6</span></td><td style="padding:6px 4px;border-bottom:1px dashed var(--line)">香格里拉 → 昆明 ~680km / 8h：<b>双驾驶员每 2 小时轮换</b>、07:00 出发、当天不看景点、中途正常休息，<b>单日不超 700km 红线</b>，晚住昆明</td></tr>
+            <tr><td style="padding:6px 4px;color:var(--ink2)"><span class="kbd">D13 10/7</span></td><td style="padding:6px 4px">昆明 → 佛山 ~1,400km：<b>双驾驶员轮换（每人约 700km）</b>、06:00 出发、纯驾驶约 15h 含休息约 16–17h、当晚到家；若疲劳则中途住南宁/百色，次日补完</td></tr>
+          </table>
+          <h5>行车（主线）</h5>
+          <div class="route">丽江 → 大丽高速 → 杭瑞高速 → 昆明 ｜ 520km / 6.5h</div>
+          <h5>动线（主线）</h5>
+          <div class="tasks">
+            <label class="task"><input type="checkbox" data-id="d10-t1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">08:00 出发，12:30 服务区午餐，15:30–16:00 抵达昆明</span></label>
+            <label class="task"><input type="checkbox" data-id="d10-t2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">傍晚南屏步行街、昆明老街；伴手礼在昆明买（比丽江便宜）</span></label>
+            <label class="task"><input type="checkbox" data-id="d10-t3"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">晚餐：菌子火锅或滇菜</span></label>
+            <label class="task"><input type="checkbox" data-id="d10-t4"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">今晚超市采购面包/水果/卤味<small>明天午餐车上解决</small></span></label>
+          </div>
+          <h5>食宿（主线）</h5>
+          <p class="stay"><b>住宿</b>：昆明<b>官渡区·关上/世纪城一带</b>（东二环，近石虎关 G80 入口），约 200–350 元/晚，明早约 10 分钟上高速东行。大理已在 D4–6 深度游玩，本日纯赶路。</p>
+        </div>
+        <div class="v-branch">
+          <h5>今日重点</h5>
+          <div class="note"><b>途经虎跳峡（45 元）与小中甸牧场</b>——出发前查虎跳峡当日开放状态；今天爬升到 3300m，节奏放慢。</div>
+          <h5>行车（分支）</h5>
+          <div class="route">丽江 → G214 / 丽香高速 → 香格里拉 ｜ 180km / 4h 山路</div>
+          <h5>动线（分支）</h5>
+          <div class="tasks">
+            <label class="task"><input type="checkbox" data-id="d10b-t1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">08:30 出发，先到虎跳峡上段（45 元，走栈道约 1h，恐高者桥头观景即可）</span></label>
+            <label class="task"><input type="checkbox" data-id="d10b-t2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">小中甸牧场停留拍照（秋季狼毒花正红）</span></label>
+            <label class="task"><input type="checkbox" data-id="d10b-t3"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">16:00 前抵达香格里拉，入住独克宗古城附近；今晚不洗澡、早休息<small>高反管理第一晚</small></span></label>
+            <label class="task"><input type="checkbox" data-id="d10b-t4"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">氧气瓶/葡萄糖若丽江未备齐，抵达后立即补齐</span></label>
+          </div>
+          <h5>食宿（分支）</h5>
+          <p class="stay"><b>住宿</b>：香格里拉独克宗古城<b>北门/金龙街一带</b>带车位客栈（古城内禁车，停古城停车场），约 250–400 元/晚（国庆价，<b>供氧房优先</b>）。</p>
+          <div class="note warn">分支高反管理：香格里拉 3300m，抵达当天不洗澡/不剧烈运动/不饮酒/睡觉不开空调，备足氧气瓶与葡萄糖；严重高反立即下撤丽江（180km）。拍摄当地人先征得同意，转经筒顺时针，不摸藏族人的头。香格里拉旅游投诉：<span class="kbd">0887-8225390</span></div>
+        </div>
+      </div></div>
+    </article>
+
+    <!-- D11 -->
+    <article class="day" id="day-11" data-day="11" data-anchor="07:00 出发 · 800km 返程强日" data-anchor-branch="普达措 + 松赞林寺 · 高反管理">
+      <button class="day-head" aria-expanded="false">
+        <span class="d-badge">D11</span>
+        <span class="d-main">
+          <span class="d-title v-main">昆明 → 广西南宁 <span class="branch-tag">分支接管日</span></span>
+          <span class="d-sub v-main">10/5 周一 · 返程强日（全程高速、非最高峰）</span>
+          <span class="d-title v-branch">香格里拉一日（普达措 + 松赞林寺） <span class="branch-tag">香格里拉分支</span></span>
+          <span class="d-sub v-branch">10/5 周一 · 市郊 ~80km · 第二晚仍住香格里拉</span>
+        </span>
+        <span class="d-chips v-main"><i class="chip-mini">800km</i><i class="chip-mini">8.5h</i></span>
+        <span class="d-chips v-branch"><i class="chip-mini">80km</i></span>
+        <span class="d-prog"><i></i></span>
+        <svg class="d-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="day-body"><div class="day-body-in">
+        <div class="v-main">
+          <h5>今日重点</h5>
+          <div class="note"><b>07:00 出发</b>——800km 强日，早走是关键。</div>
+          <h5>抉择（返程方案，二选一）</h5>
+          <div class="tasks">
+            <label class="task dec"><input type="checkbox" data-id="p-ret-a" data-group="g-ret"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">主线 · 昆明→南宁 800km / 南宁→佛山 540km<em class="pill rec">推荐</em>
+              <ul class="sub"><li>强弱错峰：长日避开返程最高峰，高峰日只开半天</li></ul></span></label>
+            <label class="task dec"><input type="checkbox" data-id="p-ret-b" data-group="g-ret"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">分散版 · 昆明→百色 530km / 百色→佛山 790km<em class="pill pb">备选</em>
+              <ul class="sub"><li>D11 减负为 530km 轻松日；代价：D12 在返程高峰日开 790km（纯驾驶约 9.5h）</li><li>必须 07:00 前出发，并接受「14:00 未过梧州就地住梧州」预案</li></ul></span></label>
+          </div>
+          <p class="ghint" data-g="g-ret">未选择 · 二选一</p>
+          <h5>行车</h5>
+          <div class="route">昆明 → 广昆高速 → 南宁 ｜ 800km / 纯驾驶 8.5h，含休息 10–11h（全程最长，红线例外之二）</div>
+          <div class="note">午餐车上/服务区快速解决（前晚已采购）；犯困立即进服务区眯 20 分钟。</div>
+          <h5>动线</h5>
+          <div class="tasks">
+            <label class="task"><input type="checkbox" data-id="d11-t1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt"><b>07:00 出发</b>，午餐车上解决</span></label>
+            <label class="task"><input type="checkbox" data-id="d11-t2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">每 2 小时休息 10 分钟</span></label>
+            <label class="task"><input type="checkbox" data-id="d11-t3"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">17:00–18:00 抵达南宁，入住酒店；今晚加满油</span></label>
+            <label class="task"><input type="checkbox" data-id="d11-t4"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">晚上邕州古城片区晚餐（补 D1 没吃到的），早睡</span></label>
+          </div>
+          <h5>食宿</h5>
+          <p class="stay"><b>住宿</b>：南宁<b>凤岭/东站片区</b>（民族大道东段，近南宁绕城东入口），约 200–300 元/晚；明早出发不穿城。</p>
+          <h5>后手</h5>
+          <div class="note">午后才出发或状态不佳 → 只开到百色（530km）住，D12 自动切换为分散版（790km，07:00 前出发）；疲劳累积 → 今天在昆明休整到中午再出发，接受 D13 深夜到家。</div>
+        </div>
+        <div class="v-branch">
+          <h5>今日重点</h5>
+          <div class="note"><b>普达措国家公园</b>——今天的高光；<b>提前 1 天</b>在「一部手机游云南」APP 购票（138 元），景区 08:00–16:00。</div>
+          <h5>行车（分支）</h5>
+          <div class="route">香格里拉市郊环线（普达措 / 松赞林寺 / 纳帕海）｜ ~80km / 全天含游玩</div>
+          <h5>动线（分支）</h5>
+          <div class="tasks">
+            <label class="task"><input type="checkbox" data-id="d11b-t1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">08:00 进普达措（属都湖 + 弥里塘 + 碧塔海，栈道 4–5h）<small>海拔 3500–4100m，缓行不奔跑</small></span></label>
+            <label class="task"><input type="checkbox" data-id="d11b-t2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">14:30 松赞林寺（90 元，「小布达拉宫」；转经筒顺时针）</span></label>
+            <label class="task"><input type="checkbox" data-id="d11b-t3"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">17:00 纳帕海依拉草原环湖（路边观景免费，日落最美）</span></label>
+            <label class="task"><input type="checkbox" data-id="d11b-t4"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">今晚仍住香格里拉；加满油、备好明早车上早餐<small>明早 07:00 出发长驱</small></span></label>
+          </div>
+          <h5>食宿（分支）</h5>
+          <p class="stay"><b>住宿</b>：香格里拉第二晚（续住 D10 同店免搬行李），约 250–400 元/晚。午餐自备干粮（景区内选择少且贵）。</p>
+          <div class="note">两大景点合计 6–7 小时，行程很满；普达措与松赞林寺都可「一部手机游云南」APP 购票，免排队。</div>
+        </div>
+      </div></div>
+    </article>
+
+    <!-- D12 -->
+    <article class="day" id="day-12" data-day="12" data-anchor="07:30 出发 · 14:00 未过梧州则住" data-anchor-branch="07:00 出发 · 680km · 住昆明">
+      <button class="day-head" aria-expanded="false">
+        <span class="d-badge">D12</span>
+        <span class="d-main">
+          <span class="d-title v-main">南宁 → 佛山 <span class="branch-tag">分支接管日</span></span>
+          <span class="d-sub v-main">10/6 周二 · 返程首波高峰 · 只开半天</span>
+          <span class="d-title v-branch">香格里拉 → 昆明 <span class="branch-tag">香格里拉分支</span></span>
+          <span class="d-sub v-branch">10/6 周二 · 680km / 8h · 双驾轮换 · 住昆明</span>
+        </span>
+        <span class="d-chips v-main"><i class="chip-mini">540km</i><i class="chip-mini">6h</i></span>
+        <span class="d-chips v-branch"><i class="chip-mini">680km</i><i class="chip-mini">8h</i></span>
+        <span class="d-prog"><i></i></span>
+        <svg class="d-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="day-body"><div class="day-body-in">
+        <div class="v-main">
+          <h5>今日重点</h5>
+          <div class="note"><b>07:30 出发，14:00–15:00 到家</b>——返程高峰日只开半天。</div>
+          <h5>行车</h5>
+          <div class="route">南宁 → 广昆高速 → 深岑高速 → 广明高速 → 佛山 ｜ 540km / 6h</div>
+          <div class="tasks">
+            <label class="task"><input type="checkbox" data-id="d12-t1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt"><b>07:30 出发</b></span></label>
+            <label class="task"><input type="checkbox" data-id="d12-t2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">出发前看实时路况<small>广昆桂粤段拥堵超 2 小时改道苍梧-郁南方向</small></span></label>
+          </div>
+          <h5>后手</h5>
+          <div class="note warn">极端拥堵预案：<b>14:00 仍未过梧州</b> → 梧州下高速住一晚（河东老城/高旺片区连锁较多），D13 上午轻松回佛山（约 300km），<b>不硬扛</b>。高速免费至 10/7 24:00（以驶离出口时间为准），本日仍在免费窗口内；若改走分散版（百色出发），今日为 790km/约 9.5h，07:00 前出发。</div>
+        </div>
+        <div class="v-branch">
+          <h5>今日重点</h5>
+          <div class="note"><b>07:00 出发 · 双驾驶员每 2 小时轮换</b>——680km 贴着单日红线，当天不看景点。</div>
+          <h5>行车（分支）</h5>
+          <div class="route">香格里拉 → 丽香高速 → 大丽高速 → 杭瑞高速 → 昆明 ｜ 680km / 8h</div>
+          <h5>动线（分支）</h5>
+          <div class="tasks">
+            <label class="task"><input type="checkbox" data-id="d12b-t1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt"><b>07:00 出发</b>，虎跳峡段注意落石与团雾，慢行</span></label>
+            <label class="task"><input type="checkbox" data-id="d12b-t2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">每 2 小时轮换驾驶员；12:30 服务区午餐（快速）</span></label>
+            <label class="task"><input type="checkbox" data-id="d12b-t3"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">18:00–19:00 抵达昆明入住；今晚加满油 + 超市采购明天车上餐</span></label>
+          </div>
+          <h5>食宿（分支）</h5>
+          <p class="stay"><b>住宿</b>：昆明<b>西山区·昆明西收费站/碧鸡关方向</b>（近杭瑞高速入口），约 200–350 元/晚；今晚到得晚，就近下高速入住，明早 06:00 穿城不堵。</p>
+          <h5>后手（分支）</h5>
+          <div class="note warn">若高反余波/天气差/状态不佳 → 不硬扛，只开到大理（~480km）住下，D13 改为大理 → 佛山 ~1,600km 双驾硬日（仅作兜底）。</div>
+        </div>
+      </div></div>
+    </article>
+
+    <!-- D13 -->
+    <article class="day" id="day-13" data-day="13" data-anchor="缓冲/休整 · 分支返程兜底" data-anchor-branch="06:00 出发 · 1,400km 直达佛山">
+      <button class="day-head" aria-expanded="false">
+        <span class="d-badge">D13</span>
+        <span class="d-main">
+          <span class="d-title v-main">机动 / 休整日</span>
+          <span class="d-sub v-main">10/7 周三 · 国庆返程最高峰（主线已到家）</span>
+          <span class="d-title v-branch">昆明 → 佛山 <span class="branch-tag">香格里拉分支</span></span>
+          <span class="d-sub v-branch">10/7 周三 · ~1,400km · 双驾轮换 · 当晚到家</span>
+        </span>
+        <span class="d-chips v-main"><i class="chip-mini">缓冲</i></span>
+        <span class="d-chips v-branch"><i class="chip-mini">1400km</i><i class="chip-mini">15h</i></span>
+        <span class="d-prog"><i></i></span>
+        <svg class="d-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="day-body"><div class="day-body-in">
+        <div class="v-main">
+          <h5>场景</h5>
+          <div class="tasks">
+            <label class="task"><input type="checkbox" data-id="d13-t1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">按计划 10/6 到家：本日休整，或佛山周边（西樵山、清晖园）半天轻游</span></label>
+            <label class="task"><input type="checkbox" data-id="d13-t2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">若 10/6 拥堵滞留：本日执行剩余段（约 300km），下午到家<small>10/7 为返程最高峰，06:30 前出发并接受可能 10 小时以上的现实</small></span></label>
+            <label class="task"><input type="checkbox" data-id="d13-t3"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">若执行香格里拉分支：本日昆明 → 佛山（~1,400km，双驾驶员轮换，06:00 出发）<small>疲劳则中途住南宁/百色，次日补完剩余段</small></span></label>
+          </div>
+        </div>
+        <div class="v-branch">
+          <h5>今日重点</h5>
+          <div class="note"><b>06:00 出发 · 双驾驶员轮换（每人约 700km）</b>——全程最极限的一天：纯驾驶约 15h，含休息 16–17h。</div>
+          <h5>行车（分支）</h5>
+          <div class="route">昆明 → 广昆高速 → 南宁 → 佛山 ｜ ~1,400km / 纯驾驶 15h</div>
+          <h5>动线（分支）</h5>
+          <div class="tasks">
+            <label class="task"><input type="checkbox" data-id="d13b-t1"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt"><b>06:00 出发</b>，每 2 小时轮换驾驶，午餐车上/服务区快速解决</span></label>
+            <label class="task"><input type="checkbox" data-id="d13b-t2"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">高速免费至 10/7 24:00（以驶离出口时间为准），尽量 22:00 前驶离免费段</span></label>
+            <label class="task"><input type="checkbox" data-id="d13b-t3"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span class="txt">若中途明显疲劳：直接住南宁/百色，次日（10/8）补完剩余段<small>不硬扛，安全第一</small></span></label>
+          </div>
+          <h5>后手（分支）</h5>
+          <div class="note warn">这是全程单日最长的一天；若 D12 晚状态不佳，宁可直接启用「中途住下」预案，也不冒夜路疲劳驾驶的风险。</div>
+        </div>
+      </div></div>
+    </article>
+  </section>
+
+  <!-- ============ §4 参考速查 ============ -->
+  <section id="ref">
+    <h2 class="sec-title"><span class="no">§4</span>参考速查（查阅用，无勾选）</h2>
+    <p class="sec-desc">气温穿搭、应急电话、路上习惯等查阅型信息。费用预算已移至 §1 总览末尾。</p>
+    <div class="ref-grid">
+      <div class="card ref-card">
+        <h4>各地气温（9 月底–10 月初）</h4>
+        <table>
+          <tr><td>昆明</td><td>白天 20–26℃ · 夜间 14–17℃ · 温差 8–10℃</td></tr>
+          <tr><td>大理</td><td>白天 18–25℃ · 夜间 12–16℃ · 温差 8–10℃</td></tr>
+          <tr><td>丽江</td><td>白天 16–23℃ · 夜间 10–14℃ · 温差 10–12℃</td></tr>
+          <tr><td>雪山山顶</td><td>0–5℃，风大体感更冷</td></tr>
+        </table>
+      </div>
+      <div class="card ref-card">
+        <h4>洋葱式穿搭</h4>
+        <table>
+          <tr><td>内层·排汗</td><td>速干长袖/T恤 2–3 件（不要纯棉）</td></tr>
+          <tr><td>中层·保暖</td><td>抓绒衣 + 薄羽绒服（早晚/雪山穿）</td></tr>
+          <tr><td>外层·防护</td><td>三合一冲锋衣（防风防雨）</td></tr>
+          <tr><td>下装/鞋</td><td>速干长裤/软壳裤（忌牛仔裤）；中高帮防滑徒步鞋</td></tr>
+        </table>
+      </div>
+      <div class="card ref-card">
+        <h4>应急电话</h4>
+        <table>
+          <tr><td>报警/急救/事故</td><td><span class="kbd">110</span> / <span class="kbd">120</span> / <span class="kbd">122</span></td></tr>
+          <tr><td>高速救援</td><td><span class="kbd">12122</span></td></tr>
+          <tr><td>丽江/大理/昆明投诉</td><td><span class="kbd">0888-5123432</span> / <span class="kbd">0872-2121246</span> / <span class="kbd">0871-65163620</span></td></tr>
+          <tr><td>保险救援</td><td>出发前存入保单救援电话</td></tr>
+        </table>
+      </div>
+      <div class="card ref-card">
+        <h4>下次再来的方向</h4>
+        <ul>
+          <li>泸沽湖：丽江往返山路约 400km，需 2 天以上</li>
+          <li>滇西北大环线：昆明-大理-丽江-泸沽湖-香格里拉，12–14 天</li>
+          <li>均留待下次搭配第二驾驶员执行</li>
+        </ul>
+      </div>
+      <div class="card ref-card">
+        <h4>路上每日两件套</h4>
+        <ul>
+          <li>入住先把次日路线在高德上<b>收藏并下载离线区域</b>，确认油箱/电量与胎压</li>
+          <li>赶路日前一晚超市采购，午餐车上解决，省下排队时间多休息 20 分钟</li>
+          <li>粤 E 车在云南/广西无限行；玉龙雪山车停甘海子游客中心</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="mono">佛山 → 百色 → 昆明 → 大理 → 丽江 → 昆明 → 南宁 → 佛山 · 2026.09.25 — 10.07</div>
+    <div>票价、放票规则、开放状态存在时效性，出发前以「丽江旅游集团」小程序、「一部手机游云南」APP 及各官方渠道实时信息为准。<br>勾选与内容修改自动保存在本机浏览器（localStorage），换设备或清除浏览器数据后会重置。</div>
+  </footer>
+</div>
+
+<button class="fab" id="fab" title="回到顶部" aria-label="回到顶部"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+
+<script>
+(function(){
+  var ICN='route|shuffle|list|bed|sunrise|sun|sunlow|moon|mountain|gift|branch|star|bell|warn|alt'.split('|');
+  var ICP="<path d='M5 20c5 0 6-7 7-9 1.5-3 3-7 7-7'/><circle cx='5' cy='20' r='1.8' fill='currentColor' stroke='none'/><circle cx='19' cy='4' r='1.8' fill='currentColor' stroke='none'/>|<path d='M3 7h4l10 10h4M3 17h4l10-10h4M17 4l4 3-4 3M17 14l4 3-4 3'/>|<path d='M9 6h11M9 12h11M9 18h11M4 5.5l1.2 1.2L7.5 4.5M4 11.5l1.2 1.2L7.5 10.5M4 17.5l1.2 1.2L7.5 15.5'/>|<path d='M3 18V6'/><path d='M3 13h18v5H3'/><circle cx='7.5' cy='10.2' r='1.9'/><path d='M11 13a5 3.2 0 0 1 10 0'/>|<path d='M4 20h16M7 16a5 5 0 0 1 10 0M12 4v4M5.5 8.5 7 10M18.5 8.5 17 10M3 13h2M19 13h2'/>|<circle cx='12' cy='12' r='4'/><path d='M12 2v3M12 19v3M2 12h3M19 12h3M4.5 4.5 6.5 6.5M17.5 17.5 19.5 19.5M19.5 4.5 17.5 6.5M6.5 17.5 4.5 19.5'/>|<circle cx='12' cy='12' r='4'/><path d='M12 5v2M5 12h2M17 12h2M7.4 7.4 8.8 8.8M16.6 7.4 15.2 8.8M3 19h18'/>|<path d='M20.5 14.5A8.5 8.5 0 1 1 9.5 3.5a7 7 0 0 0 11 11z'/>|<path d='M3 18 9.5 6l3.5 6 2-3 6 9z'/>|<rect x='4' y='10' width='16' height='10' rx='1.5'/><path d='M3.5 10h17M12 6.5V20M12 6.5C10 3.5 6.5 3.8 6.9 6c.3 1.6 5.1.5 5.1.5zm0 0c2-3 5.5-2.7 5.1-.5-.3 1.6-5.1.5-5.1.5z'/>|<circle cx='6' cy='5' r='2'/><circle cx='6' cy='19' r='2'/><circle cx='18' cy='8' r='2'/><path d='M6 7v10M18 10c0 5-7 4-10 7'/>|<path d='M12 3l2.7 5.6 6.2.9-4.5 4.3 1.1 6.1-5.5-2.9-5.5 2.9 1.1-6.1L3.1 9.5l6.2-.9z'/>|<path d='M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6'/><path d='M10 19a2 2 0 0 0 4 0'/>|<path d='M12 3 2.5 20h19z'/><path d='M12 9v5'/><circle cx='12' cy='17' r='.6' fill='currentColor' stroke='none'/>|<path d='M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M18 3v4h-4M6 21v-4h4'/>".split('|');
+  var IC={};ICN.forEach(function(n,i){IC[n]=ICP[i]});
+  var RULES=[[/\u4e3b\u6384/,'star'],[/\u907f\u96f7/,'warn'],[/\u53ee\u54a3/,'bell'],[/\u540e\u624b/,'alt'],[/\u6289\u62e9/,'shuffle'],[/\u53ef\u9009\u6e05\u6668/,'sunrise'],[/\u4e0a\u5348/,'sun'],[/\u4e0b\u5348/,'sunlow'],[/\u665a\u95f4|\u591c\u666f/,'moon'],[/\u4f34\u624b\u793c/,'gift'],[/\u9ad8\u53cd/,'mountain'],[/\u573a\u666f/,'branch'],[/\u98df\u5bbf/,'bed'],[/\u884c\u8f66|\u8def\u7ebf/,'route']];
+  document.querySelectorAll('#days .day-body-in h5').forEach(function(h){
+    var t=h.textContent,ic='list';
+    for(var i=0;i<RULES.length;i++){if(RULES[i][0].test(t)){ic=RULES[i][1];break;}}
+    var s=document.createElement('span');s.className='h5ic';
+    s.innerHTML="<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>"+IC[ic]+"</svg>";
+    h.insertBefore(s,h.firstChild);
+  });
+  /* inject day anchor into card header */
+  document.querySelectorAll('.day[data-anchor]').forEach(function(day){
+    var main=day.querySelector('.d-main');
+    if(!main) return;
+    var sp=document.createElement('span');
+    sp.className='d-anchor';
+    sp.textContent='◆ '+day.dataset.anchor;
+    main.appendChild(sp);
+  });
+})();
+</script>
+<script>
+(function(){
+  var KEY='yunnan2026v1';
+  var state={c:{},o:{}};
+  try{var s=JSON.parse(localStorage.getItem(KEY));if(s&&s.c&&s.o){state=s}}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+
+  var inputs=[].slice.call(document.querySelectorAll('input[type=checkbox][data-id]'));
+
+  /* restore checked */
+  inputs.forEach(function(inp){
+    if(state.c[inp.dataset.id]) inp.checked=true;
+  });
+
+  /* mutual exclusion groups */
+  function applyMutual(){
+    var groups={};
+    inputs.forEach(function(inp){
+      if(!inp.dataset.group) return;
+      (groups[inp.dataset.group]=groups[inp.dataset.group]||[]).push(inp);
+    });
+    Object.keys(groups).forEach(function(g){
+      var arr=groups[g];
+      var anyChecked=arr.some(function(i){return i.checked});
+      arr.forEach(function(i){
+        var locked=anyChecked&&!i.checked;
+        i.disabled=locked;
+        var label=i.closest('.task');
+        if(label) label.classList.toggle('locked',locked);
+      });
+      var hint=document.querySelector('.ghint[data-g="'+g+'"]');
+      if(hint){
+        var chosen=arr.filter(function(i){return i.checked});
+        if(!chosen.length){hint.textContent='未选择 · 二选一';}
+        else{
+          var t=chosen[0].closest('.task').querySelector('.txt').firstChild.textContent.trim();
+          hint.textContent='已选择：'+t.replace(/\s+/g,' ');
+        }
+      }
+    });
+  }
+
+  /* shangri-la branch switch: swap D10–13 card content */
+  var shInput=document.querySelector('input[data-id="sh-switch"]');
+  var banner=document.getElementById('shangriLaBanner');
+  function applyShangriLa(){
+    var on=!!(shInput&&shInput.checked);
+    if(banner) banner.hidden=!on;
+    document.body.classList.toggle('sh-on',on);
+    ['10','11','12','13'].forEach(function(n){
+      var day=document.getElementById('day-'+n);
+      if(day) day.classList.toggle('branch-lock',on);
+    });
+    /* swap day anchor text */
+    document.querySelectorAll('.day[data-anchor-branch]').forEach(function(day){
+      var a=day.querySelector('.d-anchor');
+      if(a) a.textContent='◆ '+(on?day.getAttribute('data-anchor-branch'):day.getAttribute('data-anchor'));
+    });
+  }
+  function taskVisible(i){
+    var on=document.body.classList.contains('sh-on');
+    if(on&&i.closest('.v-main'))return false;
+    if(!on&&i.closest('.v-branch'))return false;
+    return true;
+  }
+
+  /* collapse/expand */
+  var days=[].slice.call(document.querySelectorAll('.day'));
+  days.forEach(function(day){
+    var head=day.querySelector('.day-head');
+    if(state.o[day.id]) day.classList.add('open');
+    head.setAttribute('aria-expanded',day.classList.contains('open'));
+    head.addEventListener('click',function(){
+      day.classList.toggle('open');
+      var open=day.classList.contains('open');
+      head.setAttribute('aria-expanded',open);
+      state.o[day.id]=open;save();
+    });
+  });
+  document.getElementById('expandAll').addEventListener('click',function(){
+    days.forEach(function(d){d.classList.add('open');state.o[d.id]=true;d.querySelector('.day-head').setAttribute('aria-expanded','true')});save();
+  });
+  document.getElementById('collapseAll').addEventListener('click',function(){
+    days.forEach(function(d){d.classList.remove('open');delete state.o[d.id];d.querySelector('.day-head').setAttribute('aria-expanded','false')});save();
+  });
+
+  /* progress */
+  function syncFromDOM(){inputs=[].slice.call(document.querySelectorAll('input[type=checkbox][data-id]'))}
+  function refresh(){
+    syncFromDOM();
+    inputs.forEach(function(i){i.closest('.task').classList.toggle('done',i.checked)});
+    days.forEach(function(d){
+      var dt=[].slice.call(d.querySelectorAll('.task input[data-id]')).filter(function(i){return !i.dataset.group&&!i.disabled&&taskVisible(i)});
+      var dd=dt.filter(function(i){return i.checked}).length;
+      var pct=dt.length?Math.round(dd/dt.length*100):0;
+      var bar=d.querySelector('.d-prog i');
+      if(bar) bar.style.width=pct+'%';
+      /* mark nav chip completed when all day tasks done */
+      var dayN=d.dataset.day;
+      var finished=dt.length>0&&dd===dt.length;
+      var navChip=document.querySelector('.seg-group .chip.dchip[data-day="'+dayN+'"]');
+      if(navChip) navChip.classList.toggle('completed',finished);
+      /* route map node */
+      var mn=document.querySelector('.map-node[data-day="'+dayN+'"]');
+      if(mn) mn.classList.toggle('done',finished);
+    });
+  }
+
+  document.addEventListener('change',function(e){
+    var inp=e.target;
+    if(!inp||inp.type!=='checkbox'||!inp.dataset||!inp.dataset.id)return;
+    if(inp.checked) state.c[inp.dataset.id]=true; else delete state.c[inp.dataset.id];
+    save();
+    applyMutual();
+    if(inp===shInput) applyShangriLa();
+    refresh();
+  },true);
+
+  /* reset */
+  document.getElementById('resetAll').addEventListener('click',function(){
+    if(confirm('确定重置全部勾选与折叠状态？此操作不可撤销。')){
+      try{localStorage.removeItem(KEY)}catch(e){}
+      location.reload();
+    }
+  });
+
+  /* nav: jump chips */
+  function openDayAndGo(n){
+    var day=document.getElementById('day-'+n);
+    if(day&&!day.classList.contains('open')){day.classList.add('open');state.o[day.id]=true;day.querySelector('.day-head').setAttribute('aria-expanded','true');save();refresh();}
+    if(day){setTimeout(function(){day.scrollIntoView({behavior:'smooth',block:'start'})},60);}
+  }
+  document.querySelectorAll('.djump').forEach(function(td){
+    td.addEventListener('click',function(){openDayAndGo(td.dataset.go)});
+  });
+  document.querySelectorAll('.days-nav .dchip').forEach(function(ch){
+    ch.addEventListener('click',function(){openDayAndGo(ch.dataset.day)});
+  });
+  document.querySelectorAll('.map-node[data-day]').forEach(function(nd){
+    nd.addEventListener('click',function(){openDayAndGo(nd.dataset.day)});
+  });
+  document.querySelectorAll('.days-nav .chip[data-target]').forEach(function(ch){
+    ch.addEventListener('click',function(){
+      document.getElementById(ch.dataset.target).scrollIntoView({behavior:'smooth',block:'start'});
+    });
+  });
+
+  /* scrollspy */
+  var spyTargets=[].slice.call(document.querySelectorAll('section[id], .day[id]'));
+  var chips={};
+  document.querySelectorAll('.days-nav .chip').forEach(function(ch){
+    if(ch.dataset.day) chips['day-'+ch.dataset.day]=ch;
+    else if(ch.dataset.target) chips[ch.dataset.target]=ch;
+  });
+  /* keep active chip in view: auto-scroll the nav strip when active chip moves out of viewport */
+  var navIn=document.querySelector('.days-nav-in');
+  function syncNavChip(chip){
+    if(!chip||!navIn) return;
+    var nl=navIn.getBoundingClientRect().left;
+    var cl=chip.getBoundingClientRect().left-nl+navIn.scrollLeft;
+    var cr=cl+chip.offsetWidth;
+    if(cl<navIn.scrollLeft+8||cr>navIn.scrollLeft+navIn.clientWidth-8){
+      var target=cl-(navIn.clientWidth/2)+(chip.offsetWidth/2);
+      navIn.scrollTo({left:Math.max(0,Math.min(target,navIn.scrollWidth-navIn.clientWidth)),behavior:'smooth'});
+    }
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          var id=en.target.id;
+          Object.keys(chips).forEach(function(k){chips[k].classList.remove('active')});
+          if(chips[id]){chips[id].classList.add('active');syncNavChip(chips[id]);}
+        }
+      });
+    },{rootMargin:'-15% 0px -70% 0px'});
+    spyTargets.forEach(function(t){io.observe(t)});
+  }
+
+  /* today highlight (trip window) */
+  (function(){
+    var map={'0925':'1','0926':'2','0927':'3','0928':'4','0929':'5','0930':'6','1001':'7','1002':'8','1003':'9','1004':'10','1005':'11','1006':'12','1007':'13'};
+    var d=new Date();
+    var mm=('0'+(d.getMonth()+1)).slice(-2), dd=('0'+d.getDate()).slice(-2);
+    var dayN=map[mm+dd];
+    if(dayN){
+      var day=document.getElementById('day-'+dayN);
+      var chip=document.querySelector('.days-nav .dchip[data-day="'+dayN+'"]');
+      if(day) day.classList.add('today');
+      if(chip) chip.classList.add('today');
+      if(day&&!day.classList.contains('open')){day.classList.add('open');state.o[day.id]=true;day.querySelector('.day-head').setAttribute('aria-expanded','true');}
+      /* auto-scroll nav so today's segment is centered */
+      syncNavChip(chip);
+    }
+  })();
+
+  /* back to top */
+  var fab=document.getElementById('fab');
+  window.addEventListener('scroll',function(){
+    fab.classList.toggle('show',window.scrollY>800);
+  },{passive:true});
+  fab.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+
+  applyMutual();
+  applyShangriLa();
+  refresh();
+})();
+</script>
+<script>
+(function(){
+  var KEY='yunnan2026v1_notes';
+  var notes={};try{notes=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+  var ICON="<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><g transform='translate(0,-0.5)'><path d='M4 5h16v11H9l-5 4z'/><path d='M8.5 9.5h7M8.5 12.5h4.5'/></g></svg>";
+  for(var n=1;n<=13;n++){
+    var host=document.querySelector('#day-'+n+' .day-body-in');
+    if(!host)continue;
+    var h=document.createElement('h5');
+    h.innerHTML="<span class='h5ic'>"+ICON+"</span>\u968f\u8bb0 · \u4e34\u65f6\u4efb\u52a1\u4e0e\u53d8\u52a8";
+    var ta=document.createElement('textarea');
+    ta.className='day-note';
+    ta.value=notes['d'+n]||'';
+    ta.dataset.day='d'+n;
+    ta.addEventListener('input',function(){
+      notes[this.dataset.day]=this.value;
+      try{localStorage.setItem(KEY,JSON.stringify(notes))}catch(e){}
+    });
+    host.appendChild(h);host.appendChild(ta);
+  }
+})();
+</script>
+</body>
+</html>

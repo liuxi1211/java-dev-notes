@@ -1,0 +1,12 @@
+{
+  "id": "obsidian-tasks-plugin",
+  "name": "任务管理",
+  "version": "8.3.0",
+  "minAppVersion": "1.8.7",
+  "description": "在整个库中追踪任务。支持截止日期、重复任务、完成日期、清单项子集和筛选功能。",
+  "helpUrl": "https://publish.obsidian.md/tasks/",
+  "author": "Clare Macrae and Ilyas Landikov (created by Martin Schenck)",
+  "authorUrl": "https://github.com/obsidian-tasks-group",
+  "fundingUrl": "https://github.com/sponsors/claremacrae",
+  "isDesktopOnly": false
+}

@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>代购商城原型 - A1商品中心化 + B1搜索能力升级 + B2流量与SEO</title>
+<style>
+:root {
+  --brand: #7C3AED;
+  --brand-light: #EDE9FE;
+  --brand-dark: #5B21B6;
+  --accent: #059669;
+  --accent-light: #D1FAE5;
+  --warning: #D97706;
+  --warning-light: #FEF3C7;
+  --danger: #DC2626;
+  --danger-light: #FEE2E2;
+  --surface: #FFFFFF;
+  --surface-muted: #F9FAFB;
+  --surface-alt: #F3F4F6;
+  --border: #E5E7EB;
+  --border-strong: #D1D5DB;
+  --text: #111827;
+  --text-secondary: #4B5563;
+  --text-muted: #9CA3AF;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: "SF Mono", "Fira Code", "Cascadia Code", Consolas, monospace;
+  --radius: 6px;
+  --radius-card: 10px;
+  --radius-full: 999px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --brand: #A78BFA;
+    --brand-light: #2E1065;
+    --brand-dark: #C4B5FD;
+    --accent: #34D399;
+    --accent-light: #064E3B;
+    --warning: #FBBF24;
+    --warning-light: #451A03;
+    --danger: #F87171;
+    --danger-light: #450A0A;
+    --surface: #1F2937;
+    --surface-muted: #111827;
+    --surface-alt: #374151;
+    --border: #374151;
+    --border-strong: #4B5563;
+    --text: #F9FAFB;
+    --text-secondary: #D1D5DB;
+    --text-muted: #6B7280;
+  }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--surface-muted);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 20px;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+.page-subtitle {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.mall-root {
+  max-width: 1100px;
+  margin: 0 auto;
+  background: var(--surface-muted);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.mall-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.mall-logo {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--brand);
+  white-space: nowrap;
+  letter-spacing: -0.5px;
+}
+.mall-logo span { color: var(--text); font-weight: 400; font-size: 13px; margin-left: 2px; }
+.mall-search {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+  background: var(--surface-muted);
+  border: 2px solid var(--brand);
+  border-radius: var(--radius-full);
+  padding: 2px 4px 2px 14px;
+}
+.mall-search input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 14px;
+  color: var(--text);
+  padding: 6px 0;
+}
+.mall-search input::placeholder { color: var(--text-muted); }
+.mall-search-btn {
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 7px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.mall-search-btn:hover { background: var(--brand-dark); }
+.mall-nav {
+  display: flex;
+  gap: 18px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.mall-nav span { cursor: pointer; white-space: nowrap; }
+.mall-nav span:hover { color: var(--brand); }
+.mall-nav .active { color: var(--brand); font-weight: 600; }
+
+.mall-body {
+  display: flex;
+  min-height: 520px;
+}
+.mall-sidebar {
+  width: 200px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 12px 0;
+}
+.sidebar-section {
+  padding: 0 14px 10px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 10px;
+}
+.sidebar-section:last-child { border-bottom: none; margin-bottom: 0; }
+.sidebar-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+.filter-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text);
+  padding: 3px 0;
+  cursor: pointer;
+}
+.filter-item:hover { color: var(--brand); }
+.filter-item input { accent-color: var(--brand); width: 14px; height: 14px; cursor: pointer; }
+.filter-item .count { color: var(--text-muted); font-size: 12px; margin-left: auto; }
+
+.mall-main {
+  flex: 1;
+  padding: 14px 16px;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.breadcrumb {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.breadcrumb b { color: var(--text-secondary); }
+
+.result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.result-count { font-size: 13px; color: var(--text-secondary); }
+.result-count b { color: var(--text); }
+.sort-tabs {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  font-size: 13px;
+  flex-wrap: wrap;
+}
+.sort-tab {
+  padding: 4px 10px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+.sort-tab:hover { background: var(--surface-alt); }
+.sort-tab.active { background: var(--brand-light); color: var(--brand); font-weight: 600; }
+
+.product-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.product-card:hover {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 1px var(--brand);
+}
+.product-card-row {
+  display: flex;
+  gap: 14px;
+}
+.product-card-expanded {
+  display: none;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border);
+}
+.product-card.expanded .product-card-expanded {
+  display: block;
+}
+.expand-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--brand);
+  background: var(--brand-light);
+  border-radius: var(--radius-full);
+  padding: 4px 14px;
+  cursor: pointer;
+  border: none;
+  margin-top: 6px;
+}
+.expand-btn:hover { background: var(--brand); color: #fff; }
+.expand-arrow { transition: transform 0.2s; display: inline-block; }
+.product-card.expanded .expand-arrow { transform: rotate(180deg); }
+.product-card.expanded { border-color: var(--brand); box-shadow: 0 0 0 1px var(--brand); }
+.mini-offer-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.mini-offer-table th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  padding: 4px 8px 4px 0;
+  border-bottom: 2px solid var(--border);
+}
+.mini-offer-table td {
+  padding: 6px 8px 6px 0;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+.mini-offer-table tr:last-child td { border-bottom: none; }
+.mini-offer-table tr:hover td { background: var(--surface-muted); }
+.product-img {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius);
+  background: var(--surface-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+}
+.product-info { flex: 1; min-width: 0; }
+.product-mpn {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text);
+  margin-bottom: 1px;
+}
+.product-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+.product-meta {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  border-radius: var(--radius-full);
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.badge-brand { background: var(--brand-light); color: var(--brand-dark); }
+.badge-accent { background: var(--accent-light); color: var(--accent); }
+.badge-warning { background: var(--warning-light); color: var(--warning); }
+.badge-danger { background: var(--danger-light); color: var(--danger); }
+.badge-neutral { background: var(--surface-alt); color: var(--text-secondary); }
+
+.product-price {
+  text-align: right;
+  flex-shrink: 0;
+  min-width: 110px;
+}
+.price-from { font-size: 11px; color: var(--text-muted); }
+.price-value {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--brand);
+  font-family: var(--font-mono);
+}
+.price-unit { font-size: 11px; color: var(--text-muted); font-weight: 400; }
+.price-strike {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+.offer-count {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Annotation tag */
+.annotation { position: relative; }
+.annotation::after {
+  content: attr(data-anno);
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  background: var(--brand);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 0 var(--radius-card) 0 var(--radius);
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+  z-index: 1;
+}
+
+/* Detail view */
+.detail-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  margin-bottom: 10px;
+  padding: 4px 0;
+}
+.detail-back:hover { color: var(--brand); }
+
+.detail-header {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+}
+.detail-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.detail-mpn-block { flex: 1; min-width: 200px; }
+.detail-mpn {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+}
+.detail-brand {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+.detail-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+.detail-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.btn {
+  padding: 7px 14px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.btn-primary { background: var(--brand); color: #fff; }
+.btn-primary:hover { background: var(--brand-dark); }
+.btn-outline { background: var(--surface); border: 1px solid var(--border-strong); color: var(--text); }
+.btn-outline:hover { border-color: var(--brand); color: var(--brand); }
+.btn-outline:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+@media (max-width: 700px) {
+  .detail-grid { grid-template-columns: 1fr; }
+}
+.detail-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 12px 14px;
+}
+.detail-card-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.param-table { width: 100%; font-size: 13px; }
+.param-table tr { border-bottom: 1px solid var(--border); }
+.param-table tr:last-child { border-bottom: none; }
+.param-table td { padding: 4px 0; }
+.param-table td:first-child { color: var(--text-muted); width: 45%; }
+.param-table td:last-child { color: var(--text); font-weight: 500; }
+
+.offer-table {
+  width: 100%;
+  font-size: 13px;
+  border-collapse: collapse;
+}
+.offer-table th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  padding: 4px 8px 6px 0;
+  border-bottom: 2px solid var(--border);
+}
+.offer-table td {
+  padding: 8px 8px 8px 0;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+.offer-table tr:last-child td { border-bottom: none; }
+.offer-table tr:hover td { background: var(--surface-muted); }
+.offer-supplier { font-weight: 600; color: var(--text); font-size: 13px; }
+.offer-price { font-family: var(--font-mono); font-weight: 700; color: var(--brand); font-size: 14px; }
+.offer-stock { font-family: var(--font-mono); color: var(--accent); font-weight: 600; }
+.offer-stock.low { color: var(--warning); }
+.offer-stock.zero { color: var(--danger); }
+.offer-freshness { font-size: 11px; color: var(--text-muted); }
+.offer-freshness.old { color: var(--warning); }
+
+.alt-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+.alt-item:last-child { border-bottom: none; }
+.alt-item:hover { background: var(--surface-muted); margin: 0 -14px; padding: 6px 14px; }
+.alt-mpn { font-family: var(--font-mono); font-weight: 600; font-size: 13px; color: var(--text); }
+.alt-type { font-size: 11px; color: var(--text-muted); }
+.alt-price { margin-left: auto; font-family: var(--font-mono); font-weight: 700; color: var(--brand); font-size: 13px; }
+
+.mall-footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 8px 16px;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<div class="page-title">代购商城原型 · A1 商品中心化 + B1 搜索能力升级 + B2 流量与SEO</div>
+<div class="page-subtitle">点击商品卡片查看型号详情（比价表 / 参数 / 替代料） · 紫色角标标注了对应的改造项</div>
+
+<div class="mall-root" id="mall-root">
+
+<div class="mall-header">
+  <div class="mall-logo">LCSC<span>立创商城·代购</span></div>
+  <div class="mall-search">
+    <input type="text" id="mall-search-input" placeholder="搜索型号 / 关键词，如 STM32F103C8T6、单片机、0603电阻" value="STM32F103">
+    <button class="mall-search-btn" id="mall-search-btn">搜索</button>
+  </div>
+  <div class="mall-nav">
+    <span>全部商品</span>
+    <span class="active">代购专区</span>
+    <span>BOM 配单</span>
+    <span>SMT 贴片</span>
+  </div>
+</div>
+
+<div class="mall-body">
+  <div class="mall-sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-title">分类</div>
+      <div class="filter-item"><input type="checkbox" checked> MCU 微控制器 <span class="count">1,204</span></div>
+      <div class="filter-item"><input type="checkbox"> 存储器 <span class="count">8,901</span></div>
+      <div class="filter-item"><input type="checkbox"> 电源管理 <span class="count">5,632</span></div>
+      <div class="filter-item"><input type="checkbox"> 接口芯片 <span class="count">3,210</span></div>
+      <div class="filter-item"><input type="checkbox"> 电阻 <span class="count">12,000+</span></div>
+    </div>
+    <div class="sidebar-section annotation" data-anno="B1 L3 参数搜索">
+      <div class="sidebar-title">核心参数 (MCU)</div>
+      <div class="filter-item"><input type="checkbox" checked> 内核: ARM Cortex-M3</div>
+      <div class="filter-item"><input type="checkbox"> 主频: 72MHz</div>
+      <div class="filter-item"><input type="checkbox"> Flash: 64KB</div>
+      <div class="filter-item"><input type="checkbox"> RAM: 20KB</div>
+      <div class="filter-item"><input type="checkbox"> 封装: LQFP-48</div>
+      <div class="filter-item"><input type="checkbox"> I/O 数: 37</div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">品牌</div>
+      <div class="filter-item"><input type="checkbox" checked> ST(意法)</div>
+      <div class="filter-item"><input type="checkbox"> GD(兆易创新)</div>
+      <div class="filter-item"><input type="checkbox"> NXP</div>
+      <div class="filter-item"><input type="checkbox"> TI(德州仪器)</div>
+    </div>
+    <div class="sidebar-section annotation" data-anno="A1 供应商筛选">
+      <div class="sidebar-title">供应商 (26家)</div>
+      <div class="filter-item"><input type="checkbox" checked> Mouser <span class="count">8,210</span></div>
+      <div class="filter-item"><input type="checkbox" checked> Digi-Key <span class="count">6,540</span></div>
+      <div class="filter-item"><input type="checkbox"> Arrow <span class="count">4,102</span></div>
+      <div class="filter-item"><input type="checkbox"> Element14 <span class="count">3,887</span></div>
+      <div class="filter-item"><input type="checkbox"> TI 官网 <span class="count">1,203</span></div>
+      <div class="filter-item"><input type="checkbox"> 更多 21 家...</div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">交期</div>
+      <div class="filter-item"><input type="checkbox"> 现货 (3天内)</div>
+      <div class="filter-item"><input type="checkbox"> 1-2周</div>
+      <div class="filter-item"><input type="checkbox"> 2-4周</div>
+    </div>
+  </div>
+
+  <div class="mall-main" id="mall-main"></div>
+</div>
+
+<div class="mall-footer">
+  立创商城 · 海外代购业绩提升原型 · A1 商品中心化 + B1 搜索能力升级 + B2 流量与SEO · 点击商品卡片查看型号详情
+</div>
+
+</div>
+
+<script>
+(function() {
+  var root = document.getElementById('mall-root');
+  var main = document.getElementById('mall-main');
+
+  var products = [
+    {
+      id: 'stm32f103c8t6',
+      mpn: 'STM32F103C8T6',
+      brand: 'ST（意法半导体）',
+      desc: 'ARM Cortex-M3 内核 · 72MHz · Flash 64KB · RAM 20KB · LQFP-48',
+      img: 'MCU',
+      bestPrice: 6.85,
+      originalPrice: 9.50,
+      currency: '¥',
+      unit: '/个',
+      offers: 6,
+      priceTiers: [
+        {qty:'10-99', price:'8.50'},
+        {qty:'100-499', price:'7.82'},
+        {qty:'500-999', price:'7.20'},
+        {qty:'1000+', price:'6.85'}
+      ],
+      tags: [
+        {type:'brand',label:'⭐ 最推荐'},
+        {type:'danger',label:'💰 最优价'},
+        {type:'accent',label:'📦 库存充足'},
+        {type:'warning',label:'🔥 热门料 建议尽快下单'}
+      ],
+      stock: '4,800+',
+      promiseRate: '98.2%',
+      param: {
+        '内核': 'ARM Cortex-M3',
+        '主频': '72 MHz',
+        'Flash': '64 KB',
+        'RAM': '20 KB',
+        'I/O 数': '37',
+        '封装': 'LQFP-48',
+        '工作电压': '2.0V ~ 3.6V',
+        'ADC': '12位 ×3',
+        '工作温度': '-40°C ~ 85°C'
+      },
+      altParts: [
+        {mpn:'GD32F103C8T6', brand:'兆易创新', type:'pin-to-pin 国产替代', price:'6.50'},
+        {mpn:'STM32F103CBT6', brand:'ST', type:'Flash升级版(128KB)', price:'9.30'},
+        {mpn:'APM32F103C8T6', brand:'极海半导体', type:'功能替代·国产', price:'5.80'}
+      ],
+      offerList: [
+        {supplier:'Mouser', price:'6.85', step:'1', leadTime:'3-5个工作日', priceTiers:[{qty:'10+',price:'8.50'},{qty:'100+',price:'7.82'},{qty:'500+',price:'7.20'},{qty:'1000+',price:'6.85'}], stock:'2,100', stockLevel:'good', freshness:'2小时前', region:'香港仓', isBest:true, promise:'stock', promiseText:'✅ 现货承诺 3日内发货', badge:'💰最优价', tags:['brand-direct']},
+        {supplier:'Digi-Key', price:'7.10', step:'1', leadTime:'5-7个工作日', priceTiers:[{qty:'1+',price:'8.90'},{qty:'25+',price:'8.20'},{qty:'100+',price:'7.60'},{qty:'1000+',price:'7.10'}], stock:'1,500', stockLevel:'good', freshness:'1小时前', region:'美国直发', promise:'stock', promiseText:'✅ 现货承诺 5日内发货', badge:'⚡最快交货', tags:['brand-direct']},
+        {supplier:'Arrow', price:'7.25', step:'1', leadTime:'3-5个工作日', priceTiers:[{qty:'10+',price:'8.60'},{qty:'100+',price:'7.80'},{qty:'500+',price:'7.25'}], stock:'800', stockLevel:'ok', freshness:'5小时前', region:'香港仓', promise:'time', promiseText:'⏳ 预计3工作日交货', tags:[]},
+        {supplier:'Element14', price:'7.60', step:'5', leadTime:'7-10个工作日', priceTiers:[{qty:'1+',price:'8.45'},{qty:'50+',price:'8.00'},{qty:'100+',price:'7.60'}], stock:'200', stockLevel:'low', freshness:'3小时前', region:'新加坡仓', promise:'time', promiseText:'⏳ 预计7工作日（含采购2天）', tags:[]},
+        {supplier:'自营现货', price:'7.90', step:'1', leadTime:'1-2个工作日', priceTiers:[{qty:'1+',price:'8.90'},{qty:'10+',price:'8.20'},{qty:'100+',price:'7.90'}], stock:'200', stockLevel:'low', freshness:'昨天', region:'深圳仓', promise:'risk', promiseText:'⚠️ 库存需确认 下单后4h内反馈', tags:['price-warn']},
+        {supplier:'Future Electronics', price:'8.20', step:'100', leadTime:'待确认', priceTiers:[{qty:'1+',price:'9.20'},{qty:'100+',price:'8.50'},{qty:'1000+',price:'8.20'}], stock:'0', stockLevel:'zero', freshness:'6小时前', region:'需询价', promise:'risk', promiseText:'⚠️ 价格待确认 需人工询价', tags:['price-warn']}
+      ]
+    },
+    {
+      id: 'stm32f103rbt6',
+      mpn: 'STM32F103RBT6',
+      brand: 'ST（意法半导体）',
+      desc: 'ARM Cortex-M3 · 72MHz · Flash 128KB · RAM 20KB · LQFP-64',
+      img: 'MCU',
+      bestPrice: 9.90,
+      originalPrice: null,
+      currency: '¥',
+      unit: '/个',
+      offers: 4,
+      priceTiers: [
+        {qty:'10-99', price:'11.35'},
+        {qty:'100-499', price:'10.60'},
+        {qty:'1000+', price:'9.90'}
+      ],
+      tags: [
+        {type:'warning',label:'⏳ 最快5天到货'},
+        {type:'neutral',label:'⚠️ 库存需确认'}
+      ],
+      stock: '2,300+'
+    },
+    {
+      id: 'gd32f103c8t6',
+      mpn: 'GD32F103C8T6',
+      brand: '兆易创新（GigaDevice）',
+      desc: 'ARM Cortex-M3 · 108MHz · Flash 64KB · LQFP-48 · STM32 pin-to-pin 替代',
+      img: 'MCU',
+      bestPrice: 5.20,
+      originalPrice: 7.80,
+      currency: '¥',
+      unit: '/个',
+      offers: 3,
+      priceTiers: [
+        {qty:'10-99', price:'6.50'},
+        {qty:'100-499', price:'5.90'},
+        {qty:'1000+', price:'5.20'}
+      ],
+      tags: [
+        {type:'danger',label:'🇨🇳 国产优选'},
+        {type:'accent',label:'📦 库存充足'},
+        {type:'brand',label:'⭐ STM32替代'}
+      ],
+      stock: '5,600+'
+    },
+    {
+      id: 'stm32f407vet6',
+      mpn: 'STM32F407VET6',
+      brand: 'ST（意法半导体）',
+      desc: 'ARM Cortex-M4 · 168MHz · Flash 512KB · RAM 192KB · LQFP-100',
+      img: 'MCU',
+      bestPrice: 24.50,
+      originalPrice: null,
+      currency: '¥',
+      unit: '/个',
+      offers: 5,
+      priceTiers: [
+        {qty:'1-9', price:'28.90'},
+        {qty:'10-99', price:'27.20'},
+        {qty:'100+', price:'24.50'}
+      ],
+      tags: [
+        {type:'warning',label:'⚠️ 价格可能已变动'},
+        {type:'neutral',label:'⚠️ 库存需确认'}
+      ],
+      stock: '860+'
+    }
+  ];
+
+  function renderList() {
+    var html = '';
+    html += '<div class="breadcrumb">首页 > <b>代购专区</b> > MCU 微控制器 > 搜索 "STM32F103"</div>';
+    html += '<div class="result-header">';
+    html += '  <div class="result-count">找到 <b>4</b> 个匹配型号（聚合自 <b>6</b> 家供应商）</div>';
+    html += '  <div class="sort-tabs">';
+    html += '    <span class="sort-tab active">综合排序</span>';
+    html += '    <span class="sort-tab">价格↑</span>';
+    html += '    <span class="sort-tab">库存↑</span>';
+    html += '    <span class="sort-tab">交期↑</span>';
+    html += '    <span class="sort-tab">🇨🇳 国产优先</span>';
+    html += '  </div>';
+    html += '</div>';
+
+    products.forEach(function(p, i) {
+      var tagsHtml = p.tags.map(function(t) {
+        return '<span class="badge badge-' + t.type + '">' + t.label + '</span>';
+      }).join('');
+      var priceStrike = p.originalPrice
+        ? '<div class="price-strike">' + p.currency + p.originalPrice.toFixed(2) + '</div>'
+        : '';
+      html += '<div class="product-card" data-idx="' + i + '">';
+      html += '  <div class="product-card-row">';
+      html += '    <div class="product-img">' + p.img + '</div>';
+      html += '    <div class="product-info">';
+      html += '      <div class="product-mpn">' + p.mpn + '</div>';
+      html += '      <div class="product-desc">' + p.desc + '</div>';
+      html += '      <div class="product-meta">' + tagsHtml;
+      html += '        <span class="badge badge-neutral">' + p.brand + '</span>';
+      html += '      </div>';
+      html += '    </div>';
+      html += '    <div class="product-price">';
+      html += '      <div class="price-from">批量最低价</div>';
+      html += '      <div class="price-value">' + p.currency + p.bestPrice.toFixed(2) + '<span class="price-unit">' + p.unit + '</span></div>';
+      if (p.priceTiers && p.priceTiers.length > 1) {
+        html += '      <div style="font-size:11px;color:var(--text-muted);margin-top:1px;">阶梯价 ' + p.priceTiers.length + ' 档 · 起' + p.priceTiers[0].qty + '个</div>';
+      }
+      html += '      ' + priceStrike;
+      html += '      <div class="offer-count">📍 ' + p.offers + '家供应商 · 库存' + p.stock + '</div>';
+      html += '    </div>';
+      html += '  </div>';
+      html += '  <div style="text-align:center;">';
+      html += '    <button class="expand-btn" data-expand-idx="' + i + '">';
+      html += '      <span class="expand-arrow">▼</span> 展开比价下单（' + p.offers + '家供应商）';
+      html += '    </button>';
+      html += '  </div>';
+      html += '  <div class="product-card-expanded" id="expanded-' + i + '"></div>';
+      html += '</div>';
+    });
+
+    main.innerHTML = html;
+
+    var cards = root.querySelectorAll('.product-card');
+    cards.forEach(function(card) {
+      card.addEventListener('click', function(e) {
+        if (e.target.closest('.expand-btn') || e.target.closest('.product-card-expanded')) return;
+        var idx = parseInt(this.dataset.idx);
+        renderDetail(products[idx]);
+      });
+    });
+
+    var expandBtns = root.querySelectorAll('.expand-btn');
+    expandBtns.forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var idx = parseInt(this.dataset.expandIdx);
+        var card = this.closest('.product-card');
+        var expandedDiv = root.querySelector('#expanded-' + idx);
+        if (card.classList.contains('expanded')) {
+          card.classList.remove('expanded');
+          this.innerHTML = '<span class="expand-arrow">▼</span> 展开比价下单（' + products[idx].offers + '家供应商）';
+        } else {
+          if (!expandedDiv.innerHTML) {
+            expandedDiv.innerHTML = renderMiniOfferTable(products[idx]);
+          }
+          card.classList.add('expanded');
+          this.innerHTML = '<span class="expand-arrow">▼</span> 收起';
+        }
+      });
+    });
+  }
+
+  function renderMiniOfferTable(p) {
+    if (!p.offerList || p.offerList.length === 0) {
+      return '<div style="text-align:center;color:var(--text-muted);font-size:13px;padding:10px;">暂无报价数据，请前往详情页查看</div>';
+    }
+    var html = '';
+    html += '<table class="mini-offer-table">';
+    html += '<thead><tr>';
+    html += '<th>供应商</th><th>阶梯价</th><th>库存 · 递增 · 交期</th><th>承诺</th><th>操作</th>';
+    html += '</tr></thead><tbody>';
+    p.offerList.forEach(function(o) {
+      var stockClass = o.stockLevel === 'low' ? 'low' : o.stockLevel === 'zero' ? 'zero' : '';
+      var stockText = o.stock === '0' ? '需询价' : o.stock + ' 个';
+      var bestBadge = o.badge ? '<span class="badge badge-accent" style="font-size:9px;margin-left:4px;">' + o.badge + '</span>' : '';
+      var extraTags = '';
+      if (o.tags && o.tags.indexOf('brand-direct') >= 0) extraTags += ' <span class="badge badge-brand" style="font-size:9px;">品牌直采</span>';
+      var promiseClass = o.promise === 'stock' ? 'badge-accent' : o.promise === 'time' ? 'badge-warning' : 'badge-danger';
+
+      var priceHtml = '';
+      if (o.priceTiers && o.priceTiers.length > 0) {
+        o.priceTiers.forEach(function(t) {
+          priceHtml += '<div style="font-size:10px;color:var(--text-muted);">' + t.qty + '个 <span style="color:var(--text-secondary);font-weight:600;">¥' + t.price + '</span></div>';
+        });
+      }
+
+      var stockCol = '<span class="offer-stock ' + stockClass + '" style="font-size:11px;">' + stockText + '</span>';
+      if (o.step) stockCol += '<div style="font-size:9px;color:var(--text-muted);">递增量：' + o.step + '</div>';
+      if (o.leadTime) stockCol += '<div style="font-size:9px;color:var(--text-muted);">📦 ' + o.leadTime + '</div>';
+
+      var actionBtn = o.stock === '0'
+        ? '<button class="btn btn-outline" style="padding:3px 8px;font-size:11px;" disabled>询价</button>'
+        : '<button class="btn btn-outline" style="padding:3px 8px;font-size:11px;">下单</button>';
+
+      html += '<tr>';
+      html += '<td><span style="font-weight:600;font-size:12px;">' + o.supplier + '</span>' + bestBadge + extraTags + '<div style="font-size:10px;color:var(--text-muted);">' + (o.region||'') + '</div></td>';
+      html += '<td>' + priceHtml + '</td>';
+      html += '<td>' + stockCol + '</td>';
+      html += '<td><span class="badge ' + promiseClass + '" style="font-size:9px;">' + o.promiseText + '</span></td>';
+      html += '<td>' + actionBtn + '</td>';
+      html += '</tr>';
+    });
+    html += '</tbody></table>';
+    html += '<div style="margin-top:6px;font-size:11px;color:var(--text-muted);text-align:right;">💡 点击型号名称查看完整详情（参数/替代料/资料下载）</div>';
+    return html;
+  }
+
+  function renderDetail(p) {
+    var paramRows = '';
+    if (p.param) {
+      Object.keys(p.param).forEach(function(k) {
+        paramRows += '<tr><td>' + k + '</td><td>' + p.param[k] + '</td></tr>';
+      });
+    }
+
+    var offerRows = '';
+    if (p.offerList) {
+      p.offerList.forEach(function(o) {
+        var stockClass = o.stockLevel === 'low' ? 'low' : o.stockLevel === 'zero' ? 'zero' : '';
+        var freshClass = (o.freshness.indexOf('天') >= 0 || o.freshness.indexOf('昨天') >= 0) ? 'old' : '';
+        var bestBadge = o.badge ? '<span class="badge badge-accent" style="margin-left:6px;">' + o.badge + '</span>' : '';
+        var stockText = o.stock === '0' ? '需询价' : o.stock + ' 个';
+        var actionBtn = o.stock === '0'
+          ? '<button class="btn btn-outline" style="padding:4px 10px;font-size:12px;" disabled>询价</button>'
+          : '<button class="btn btn-outline" style="padding:4px 10px;font-size:12px;">下单</button>';
+        var promiseClass = o.promise === 'stock' ? 'badge-accent' : o.promise === 'time' ? 'badge-warning' : 'badge-danger';
+        var promiseHtml = o.promiseText ? '<span class="badge ' + promiseClass + '" style="font-size:11px;">' + o.promiseText + '</span>' : '';
+        var extraTags = '';
+        if (o.tags && o.tags.indexOf('brand-direct') >= 0) {
+          extraTags += '<span class="badge badge-brand" style="font-size:10px;">品牌直采</span> ';
+        }
+        if (o.tags && o.tags.indexOf('price-warn') >= 0) {
+          extraTags += '<span class="badge badge-danger" style="font-size:10px;">⚠️ 价格可能已变动</span> ';
+        }
+        var freshIcon = freshClass ? '●' : '●';
+        var priceHtml = '';
+        if (o.priceTiers && o.priceTiers.length > 0) {
+          priceHtml += '<div style="display:flex;flex-direction:column;gap:2px;">';
+          o.priceTiers.forEach(function(t, i) {
+            priceHtml += '<div style="display:flex;align-items:center;gap:6px;">';
+            priceHtml += '<span style="font-size:10px;color:var(--text-muted);min-width:50px;">' + t.qty + '个</span>';
+            priceHtml += '<span class="offer-price" style="font-size:12px;color:var(--text-secondary);">¥' + t.price + '</span>';
+            priceHtml += '</div>';
+          });
+          priceHtml += '</div>';
+        } else {
+          priceHtml = '<span class="offer-price">¥' + o.price + '</span>';
+        }
+        offerRows += '<tr>';
+        offerRows += '<td><span class="offer-supplier">' + o.supplier + '</span>' + bestBadge + extraTags;
+        offerRows += '<div style="font-size:11px;color:var(--text-muted);">' + (o.region || '') + '</div></td>';
+        offerRows += '<td>' + priceHtml + '</td>';
+        var stockColHtml = '<span class="offer-stock ' + stockClass + '">' + stockText + '</span>';
+        if (o.step) stockColHtml += '<div style="font-size:10px;color:var(--text-muted);margin-top:2px;">递增量：' + o.step + '</div>';
+        if (o.leadTime) stockColHtml += '<div style="font-size:10px;color:var(--text-muted);">📦 ' + o.leadTime + '</div>';
+        offerRows += '<td>' + stockColHtml + '</td>';
+        offerRows += '<td>' + promiseHtml + '</td>';
+        offerRows += '<td><span class="offer-freshness ' + freshClass + '">' + freshIcon + ' ' + o.freshness + '</span></td>';
+        offerRows += '<td>' + actionBtn + '</td>';
+        offerRows += '</tr>';
+      });
+    }
+
+    var altRows = '';
+    if (p.altParts) {
+      p.altParts.forEach(function(a) {
+        altRows += '<div class="alt-item">';
+        altRows += '<div><div class="alt-mpn">' + a.mpn + '</div>';
+        altRows += '<div class="alt-type">' + a.brand + ' · ' + a.type + '</div></div>';
+        altRows += '<div class="alt-price">¥' + a.price + '</div>';
+        altRows += '</div>';
+      });
+    }
+
+    var html = '';
+    html += '<div class="detail-back" id="detail-back">← 返回搜索结果</div>';
+
+    html += '<div class="detail-header annotation" data-anno="B2 独立SPU页面(SEO)">';
+    html += '<div class="breadcrumb">首页 > 代购专区 > MCU > <b>' + p.mpn + '</b></div>';
+    html += '<div class="detail-title-row">';
+    html += '  <div class="detail-mpn-block">';
+    html += '    <div class="detail-mpn">' + p.mpn + '</div>';
+    html += '    <div class="detail-brand">' + p.brand + '</div>';
+    html += '    <div class="detail-desc">' + p.desc + '</div>';
+    html += '    <div style="margin-top:6px;">';
+    var detailTagsHtml = p.tags ? p.tags.map(function(t) {
+      return '<span class="badge badge-' + t.type + '">' + t.label + '</span>';
+    }).join('') : '';
+    html += '      ' + detailTagsHtml;
+    html += '      <span class="badge badge-neutral">📄 规格书</span>';
+    html += '      <span class="badge badge-neutral">📦 包装卷带</span>';
+    if (p.promiseRate) {
+      html += '      <span class="badge badge-accent" style="font-weight:700;">🏆 近30天承诺兑现率 ' + p.promiseRate + '</span>';
+    }
+    html += '    </div>';
+    html += '  </div>';
+    html += '  <div class="detail-actions">';
+    html += '    <button class="btn btn-outline">加入BOM</button>';
+    html += '    <button class="btn btn-primary">立即购买 ¥' + p.bestPrice.toFixed(2) + '起</button>';
+    html += '  </div>';
+    html += '</div>';
+    html += '</div>';
+
+    html += '<div class="detail-grid">';
+    html += '  <div class="detail-card">';
+    html += '    <div class="detail-card-title">📋 核心参数</div>';
+    html += '    <table class="param-table">' + paramRows + '</table>';
+    html += '  </div>';
+    html += '  <div class="detail-card annotation" data-anno="B1 L5 替代料">';
+    html += '    <div class="detail-card-title">🔄 替代料推荐</div>';
+    if (altRows) {
+      html += altRows;
+    } else {
+      html += '<div style="color:var(--text-muted);font-size:13px;">暂无替代料数据</div>';
+    }
+    html += '    <div style="margin-top:8px;font-size:12px;color:var(--text-muted);">';
+    html += '      匹配规则：① pin-to-pin（封装/引脚完全一致）② 功能替代（核心参数一致）③ 国产化映射';
+    html += '    </div>';
+    html += '  </div>';
+    html += '</div>';
+
+    html += '<div class="detail-card annotation" data-anno="A1 多供应商Offer聚合 + 比价">';
+    html += '  <div class="detail-card-title">🏪 全部供应商报价（' + p.offers + '家，同型号比价）</div>';
+    html += '  <table class="offer-table">';
+    html += '    <thead><tr>';
+    html += '      <th>供应商</th><th>阶梯价</th><th>库存 · 递增 · 交期</th><th>承诺 (A3)</th><th>数据更新</th><th>操作</th>';
+    html += '    </tr></thead>';
+    html += '    <tbody>';
+    if (offerRows) {
+      html += offerRows;
+    } else {
+      html += '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:20px;">暂无报价数据</td></tr>';
+    }
+    html += '    </tbody>';
+    html += '  </table>';
+    html += '  <div style="margin-top:8px;font-size:12px;color:var(--text-muted);line-height:1.8;">';
+    html += '    💡 <strong>A1 商品中心化</strong>：同一型号自动聚合 26 家供应商报价，按型号（SPU）归一，非按供应商分别展示<br>';
+    html += '    🏷️ <strong>A3 客户决策标签</strong>：💰最优价 / ⚡最快交货 / 📦库存充足 / 品牌直采——聚合后系统自动算<br>';
+    html += '    ⚠️ <strong>A3 温和提示标签</strong>：价格可能已变动 / 库存需确认——数据过期或置信度低时自动提示，不骗客户<br>';
+    html += '    🤝 <strong>A3 三档承诺</strong>：✅ 现货承诺（实时确认有货） · ⏳ 时效承诺（含采购耗时，不冒充现货） · ⚠️ 风险明示（置信度低，下单前就知道风险）';
+    html += '  </div>';
+    html += '</div>';
+
+    main.innerHTML = html;
+
+    var backBtn = root.querySelector('#detail-back');
+    if (backBtn) {
+      backBtn.addEventListener('click', renderList);
+    }
+  }
+
+  document.getElementById('mall-search-btn').addEventListener('click', renderList);
+  document.getElementById('mall-search-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') renderList();
+  });
+
+  renderList();
+})();
+</script>
+
+</body>
+</html>
