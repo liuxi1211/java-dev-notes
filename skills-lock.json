@@ -1,0 +1,37 @@
+{
+  "version": 2,
+  "skills": {
+    "bull_bear_case_builder_skill": {
+      "source": "https://gitee.com/wind_info/wind-skills.git",
+      "sourceUrl": "https://gitee.com/wind_info/wind-skills.git",
+      "commit": "1f5cccc085751a6580eb43bec8d3ba344fdb4675",
+      "sourceType": "git",
+      "skillPath": "skills/bull_bear_case_builder_skill/SKILL.md",
+      "computedHash": "a043aaba70e5c605b4a7f2b9383ba20e90db0ba9e0c0e648621413b340338fb8"
+    },
+    "market_regime_switch_skill": {
+      "source": "https://gitee.com/wind_info/wind-skills.git",
+      "sourceUrl": "https://gitee.com/wind_info/wind-skills.git",
+      "commit": "1f5cccc085751a6580eb43bec8d3ba344fdb4675",
+      "sourceType": "git",
+      "skillPath": "skills/market_regime_switch_skill/SKILL.md",
+      "computedHash": "f628802a8a8f3ec4ada59c453b1b5bfef5025c000284a034d9765659fda92021"
+    },
+    "pullback_opportunity_finder_skill": {
+      "source": "https://gitee.com/wind_info/wind-skills.git",
+      "sourceUrl": "https://gitee.com/wind_info/wind-skills.git",
+      "commit": "1f5cccc085751a6580eb43bec8d3ba344fdb4675",
+      "sourceType": "git",
+      "skillPath": "skills/pullback_opportunity_finder_skill/SKILL.md",
+      "computedHash": "2e33b4ec5ce49e7febdfe40ceaed87f6b1b1e06236570647c5025c261a4c1df4"
+    },
+    "wind-mcp-skill": {
+      "source": "https://gitee.com/wind_info/wind-skills.git",
+      "sourceUrl": "https://gitee.com/wind_info/wind-skills.git",
+      "commit": "1f5cccc085751a6580eb43bec8d3ba344fdb4675",
+      "sourceType": "git",
+      "skillPath": "skills/wind-mcp-skill/SKILL.md",
+      "computedHash": "6462fb9a38bc02912fec645474f3304a68313cb30a6bea35aee18479f548a838"
+    }
+  }
+}
